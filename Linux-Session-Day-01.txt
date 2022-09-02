@@ -164,6 +164,66 @@ Storage 25Gb and click on "create"
 
 then start your virtual machine and follow the installation step.
 
+NOte: Virtual machine has been created.
+---------------------------------------------
+#######
+Step-04) 
+- Open "Oracle Virtual Box Manager" then right click and start your Virtual machine (VM).
+- Load your VM via ISO (OS image - centos7.9.iso).
+- Select "Operating System and ENter for installation".
+- Disk partition.
+
+ 1st partition - /boot  partition_type=primary fs_type=ext4  size=512       (Default in MB)
+ 2nd partition - swap   partition_type=LVM     fs_type=ext4     size=2048   (Default in MB)
+ 3rd partition - /      partition_type=LVM     fs_type=ext4     size=20480  (Default in MB)
+ 
+root/redhat 
+Create one account (labuser) then setup the password.
+
+Note: Set "redhat" as a connect password.
+
+
+================== 
+Atleast 4-8GB RAM for single VM machine required.
+4 Minimum CPU required 
+25-35GB Storage device required.
+
+## COmmand Option Argumment 
+
+Command  - Command is a ulitity to take some action.
+OPtion   - OPtion modified the function of the command. (MOre functional now).
+Argument - Argument is data  to execute the command.
+
+Basic commands:-
+whoami 
+pwd
+logname 
+ls -l 
+which pwd 
+/usr/bin/pwd 
+
+or 
+/bin/pwd 
+===================
+/BE/
+  - CSE 
+  - IT 
+  - ME 
+  - ECE 
+     - 1st_year 
+	 - 2nd_year 
+	 - 3rd_year 
+	 - 4th_year 
+	 
+	 
+
+
+
+
+
+
+
+
 
 
 
