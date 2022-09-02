@@ -87,9 +87,47 @@ Linux OS = UNIX utility + Linux krernel
 
 
 
-1) Users (Administratier =root account)
+1) Users (Administratier =root account, Each using havin User ID, root user's ID is 0)
 2) Normal User (User created by root user for some work).
   NOte: Normal user can also have power same as root user having.
   
-3) System users (apache, tcpdump etc)
+3) System users (apache, tcpdump etc):- When application deployed.
+
+
+################
+
+Absolute path  - It always start with "/".
+Relative path  - It never start with "/".
+
+Note: To get the absolute path - 
+$ which pwd
+/usr/bin/pwd 
+
+Same also available here.
+/bin/pwd 
+
+
+########
+## The file system Hierarchy 
+
+Level 1st Directory hierarchy:-
+"/"   - root directory 
+
+Level 2nd directory hierarchy:-
+"bin"  (Absolute location - /bin ) - ALl normal user's executable are placed inside "/bin" - Those are called command.
+"boot" (Absolute location - /boot) - All booting related files and dir here.
+"dev"  (Absolute location - /dev - All device files must be available at "dev" dir. 
+"etc"  (Absolute location - /etc  - THe main configuration file here.
+"home" (Absolute location - /home - ALl defauls user's home directory must be here.
+"root" (Absolute location - /root - root user's home directory must be here.
+"run"  (Absolute location - /run  - ALl run time data placed in "/run", it's temp).
+"sbin" (Absolute location - /sbin ) - ALl normal root/sudo user's executable are placed inside "/sbin" - Those are called command.
+"tmp"  (Absolute location - /tmp ) - ALl temp files/dir created here.
+
+        NOte: If /tmp used almost 100% then any appliaction running and referencing "/tmp" will not work.
+"usr"  (Absolute location - /usr) - This directory for easy customization.
+       Eg:- /usr/local/bin/myscript
+	        /usr/bin/tree
+			/usr/sbin/useradd
+"var"  -( Absolute location /v arr)   "Variable data (/var)"
 
