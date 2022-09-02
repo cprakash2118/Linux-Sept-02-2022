@@ -135,12 +135,29 @@ Level 2nd directory hierarchy:-
 #########################
 Installation of OS (CentOS 7.9)
 
-Step-01 ) DOwnload Oracle virtual box (3rd party software - same as hypervisor which allow to create virtual machine).
+#######
+Step-01 ) Download Oracle virtual box (3rd party software - same as hypervisor, which allow to create virtual machine).
+
+Link given below.
 https://www.virtualbox.org/wiki/Downloads
 
+
+NOte: *** 
+- What is hypervisor ?
+Explained:- Hypervisor is an Operating System (OS) which allow to create Virtual machine (over the guest os "operating system, we can install other OS like Linux/Windows).
+
+- System must be supported for Virtualization Technology (VT - Must be enabled).
+Once Oracle Virtual Box manager installed thne load the operating system.
+
+
+
+
+#######
 Step-02) DOwnload CentOS 7.9 images.
 http://centos.excellmedia.net/7.9.2009/isos/x86_64/CentOS-7-x86_64-Everything-2009.iso
+
   
+#######
 Step-03) Once download completed then open your "Oracle virtual Box Manager".
 Once "Oracle virtual Box Manager" started --> Click on new  --> Name of the virtual machine "server-01/02"  --> "Name and operating system" - Input from your side (Linux and x86_64 "version64-bits") then click on "Next" --> provide RAM "3076" inside box - 3076, Select "Create Virtual Disk now" --> VHD (Viryal Hard Disk) and click on "Next".
 Storage 25Gb and click on "create" 
