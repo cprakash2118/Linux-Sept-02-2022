@@ -44,3 +44,52 @@ Pahse-07:-
 26. Linux Mail srvers.
 
 Mock examples (hand-on based Test). 
+
+############################################################
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+
+Point-01.
+Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+What is Linux ?
+- Linux is an Operating System, and It's a interface between software and hardware.
+
+WHat is Operating System?
+- Operating Systen is a software which manage the hardware.
+  To achive the optimum utilization of hardware.
+
+What is Linux Vs Enterprise Linux?
+- Enterprise Linux (product) having SLO and SLA, which required for business.
+- Linux is a community productcoming under (OpenSource), community not having any SLO and SLA.
+- OpenSource mean - SOftware and source code must be available for all and for any purpose.
+
+Many Linux distributions:-
+ - RHEL (Red Hat Enterprise Linux) - Enterprise Linux     
+ - CentOS 
+ - Fedora 
+ - Ubuntu 
+ - Open SUSE 
+ - Enterprise SUSE     - Enterprise Linux 
+ - Kali Linux 
+ 
+What is UNIX Vs Linux ? Due to GNU projecy (GNU NOT UNIX project - To create UNIX type OS.).
+Linux OS = UNIX utility + Linux krernel 
+
+######### 
+1) Users
+2) Shell - Interface (GUI & CLI).
+3) Kernel 
+4) Hardware (IBM blade server/Cisco servers etc 
+
+
+
+1) Users (Administratier =root account)
+2) Normal User (User created by root user for some work).
+  NOte: Normal user can also have power same as root user having.
+  
+3) System users (apache, tcpdump etc)
+
