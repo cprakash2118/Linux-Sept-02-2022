@@ -1,1 +1,46 @@
-Dtae:- 02-Sept-2022 - Linux Session 
+Dtae:- 02-Sept-2022 - Linux Session:-
+===================================
+Table of Contents:-
+
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+
+Phase-06:- 
+19. Networking Services 
+20. Network CLients.
+21. Network COnfiguration.
+22. Network file sharing services (FTP/NFS/Samaba etc).
+
+Pahse-07:- 
+22. Troubleshooting
+23. Linux Bind 
+24. Linux apache 
+25. Linux Squid 
+26. Linux Mail srvers.
+
+Mock examples (hand-on based Test). 
