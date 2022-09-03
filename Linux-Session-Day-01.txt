@@ -236,11 +236,7 @@ localhost# mkdir work
 
 
 - Basic concepts of command/option/arguments.
-   # Command  option Argument(s) 
 
-Command  - Command is a ulitity to take some action.
-OPtion   - OPtion modified the function of the command. (MOre functional now).
-Argument - Argument is data which are needed to execute the command.
 
 - How to create folder - using command "mkdir" 
 
@@ -353,6 +349,28 @@ It's already already available
 ==================
 LAB-02 
 
+# mkdir work 
+# cd work 
+# mkdir dir1 dir2 
+# touch file1.txt file2.txt file3.txt 
+# cp file1.txt dir1 
+# ls -l dir1 
+Note: File has been copied.
+# mkdir dir3 
+# cp dir1 dir3 
+NOte: This will not copy the dir1 dir3 (As dir1 is not an empty directory.)
+
+# cp -r -v dir1 dir2 
+
+
+
+Command  - Command is a ulitity to take some action.
+OPtion   - OPtion modified the function of the command. (MOre functional now).
+Argument - Argument is data which are needed to execute the command.
+ 
+=====================================
+Lab-03 
+
 /BE/
   - CSE 
   - IT 
@@ -371,11 +389,8 @@ Using command while performing this operation.
 - cd .. (cd ../..  - 2 steps back etc).
 - tree /BE
 
- 
-
- 
-
-
+#  cp      -r -v   dir1 dir3  
+# Command  option Argument(s) 
 
 
 
