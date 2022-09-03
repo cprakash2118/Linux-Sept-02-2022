@@ -320,6 +320,20 @@ press key "esc" - For lock screen
 press :wq 
 
 # cat myfile.txt 
+
+##############
+$whoami 
+labuser 
+$ su - root   (Switch to "root" user acount from "labuser" user).
+passwd:       (Root password - "redhat") and press enter key.
+
+# whoami 
+root 
+##############
+
+
+ 
+
  
 
  
