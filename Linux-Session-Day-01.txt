@@ -403,13 +403,15 @@ Using command while performing this operation.
 
 Lab-05 - Yum Configuration setup.
 Target - yum install tree -y  (tree should work in your system).
+Note: install/remove any packages.
  
 
 ###
 Step-01 
 - Attach ISO (CentOS7.9) to your system.
   Setting -> Storage --> Controller IDE - Click on disk type icon. And attach the ISO to your server.
-- Login as root and run below command.
+
+- Login as root/user and run below command.
   # df -THP
   Note: *** 
   - Output of above command show all the mount points.
@@ -417,14 +419,18 @@ Step-01
   
 ##
 Step-02
-- Based on the mount point select below path.
+- Based on the mount point, select below path.
 
   # cd /run/media/root/<tab_key>
   or 
   # cd /run/media/<other_users>/Cent<tab_key>    "Copy this given path - After enter"
+  Example:-
+  # cd /run/media/labuser/Cent<Tab_key>     (<Tab_Key> means press Tab Key)
+  
   Note: ***
-  -  Once you are inside ISO mount point
+  - Once you are inside ISO mount point then
   - Copy this mentioned path - "/run/media/<other_users>/Cent<tab_key>"
+  Example: Copy (Use mouse) and copy the path "/run/media/ldapuser/CentOS<tab_key>"
 
 ##
 Step-03:-  
@@ -434,10 +440,14 @@ Step-03:-
   # whoami 
   root 
   # mkdir /root/repo_bkp
-  # mv *  /root/repo_bkp
+  # pwd
+  /etc/yum.repos.d/      
+  # mv *  /root/repo_bkp      (Wheile moving all repos to back location, your current working dir - /etc/yum.repos.d/).
   # ls -l 
   Note: No file/directory 
   
+  
+  Note: Create file with anyname.repo 
   
   # vim mrepo.repo
   Press key "i" 
@@ -456,6 +466,15 @@ Step-04-
   # yum repolist 
   # yum install tree -y   
  
+  # yum info tree -y 
+  # yum remove tree -y 
+  # yum grouplist -y
+  # yum groupinstall "Server with GUI" -y
+  # yum install php -y
+
+  # rpm -q (It show all the packages).
+  # rpm -qa |grep httpd 
+  
   
   
 
