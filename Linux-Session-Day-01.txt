@@ -442,6 +442,7 @@ Step-03:-
   # vim mrepo.repo
   Press key "i" 
   [CentOS7Repo]
+  name = Centos repo
   baseurl = file://run/media/<other_users>/Cent<tab_key>      
   gpgcheck = 0
   enabled = 1 
