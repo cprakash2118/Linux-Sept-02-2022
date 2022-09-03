@@ -299,8 +299,28 @@ Continue
 
 # cat myfile  
 =============
+SOlution-01 (Lab-01)
+# whoami 
+root 
+# pwd
+/root 
 
+# mkdir work 
+# cd work  
+# touch file1.txt fie2.txt file3.txt file4.txt 
+# mkdir dir1 dir2 
+# vim myfile.txt
+press key "i" - for insert mode 
 
+This is my 1st line.
+This is my 2nd line. 
+Continue 
+
+press key "esc" - For lock screen
+press :wq 
+
+# cat myfile.txt 
+ 
 
  
 
