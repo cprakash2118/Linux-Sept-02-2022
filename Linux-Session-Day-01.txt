@@ -380,7 +380,7 @@ Lab-03
 	 - 2nd_year 
 	 - 3rd_year 
 	 - 4th_year 
-
+  
 Using command while performing this operation.
 - whoami 
 - pwd
@@ -392,8 +392,69 @@ Using command while performing this operation.
 #  cp      -r -v   dir1 dir3  
 # Command  option Argument(s) 
 
+============================
 
 
+
+
+
+
+=======================================
+
+Lab-05 - Yum Configuration setup.
+yum install tree -y 
+
+
+Step-01 
+- Attach ISO (CentOS7.9) to your system.
+  Setting -> Storage --> Controller IDE - Click on disk type icon. And attach the ISO to your server.
+- Login as root and run below command.
+  # df -THP
+  Note: *** 
+  - Output of above command show all the mount points.
+  - Check and verify, the ISO mounting (Type must be "iso9660").
+  
+
+Step-02
+- Based on the mount point select below path.
+
+  # cd /run/media/root/<tab_key>
+  or 
+  # cd /run/media/<other_users>/Cent<tab_key>    "Copy this given path - After enter"
+  Note: ***
+  -  Once you are inside ISO mount point
+  - Copy this mentioned path - "/run/media/<other_users>/Cent<tab_key>"
+  
+Step-03:-  
+  # cd /etc/yum.repos.d/
+  # pwd
+  /etc/yum.repos.d/
+  # whoami 
+  root 
+  # mkdir /root/repo_bkp
+  # mv *  /root/repo_bkp
+  # ls -l 
+  Note: No file/directory 
+  # vim mrepo.repo
+  Press key "i" 
+  [CentOS7Repo]
+  baseurl = file://run/media/<other_users>/Cent<tab_key>      
+  gpgcheck = 0
+  enabled = 1 
+  
+  Press "esc" key and save all configuration.
+  :wq 
+
+
+Step-04-
+  # yum clean all
+  # yum repolist 
+  # yum install tree -y   
+ 
+  
+  
+
+  
 
 
 
