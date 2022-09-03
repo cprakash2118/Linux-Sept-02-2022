@@ -369,7 +369,7 @@ Using command while performing this operation.
 - cd 
 - mkdir 
 - cd .. (cd ../..  - 2 steps back etc).
-- tree /BR 
+- tree /BE
 
  
 
