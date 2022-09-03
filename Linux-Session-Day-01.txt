@@ -331,8 +331,45 @@ passwd:       (Root password - "redhat") and press enter key.
 root 
 ##############
 
+cd - command used for change directory "change dir".
 
- 
+# mkdir work   (last time already created).
+It's already already available
+# pwd
+/root 
+# cd work 
+# pwd
+/root/work
+# cd ../..   (two steps back)
+#pwd
+/
+#cd /root/work/dir2 
+#pwd
+/root/work/dir2 
+# cd ../../../
+# pwd
+/
+##################
+==================
+LAB-02 
+
+/BE/
+  - CSE 
+  - IT 
+  - ME 
+  - ECE 
+     - 1st_year 
+	 - 2nd_year 
+	 - 3rd_year 
+	 - 4th_year 
+
+Using command while performing this operation.
+- whoami 
+- pwd
+- cd 
+- mkdir 
+- cd .. (cd ../..  - 2 steps back etc).
+- tree /BR 
 
  
 
