@@ -474,7 +474,28 @@ Step-04-
 
   # rpm -q (It show all the packages).
   # rpm -qa |grep httpd 
-  
+===============================
+Top 10 line by default (-3 top three line)
+cat /etc/passwd | head 
+cat /etc/passwd | head -3
+cat /etc/passwd | head -5
+cat /etc/passwd | head -20
+
+Last 10 line by default (-3 last three line)
+cat /etc/passwd | tail 
+cat /etc/passwd | tail -4 
+cat /etc/passwd | tail -30
+
+Line 26 to 29 from /etc/passwd
+cat /etc/passwd | head -29 | tail -4
+
+(Total no of line).
+cat /etc/passwd | wc -l
+
+
+cat /etc/passwd | grep "root" 
+
+# vimtu<tab>  
   
   
 
