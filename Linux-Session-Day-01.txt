@@ -214,8 +214,65 @@ or
 	 - 2nd_year 
 	 - 3rd_year 
 	 - 4th_year 
-	 
-	 
+=================================================================
+Linux Session - Day-02 (03-Sept-2022):-
+=========
+
+Point-01 - 
+Once installation completed (RHEL/CentOS7.9 on Oracle Virtual Box) then login to yout system as root.
+Note: ***
+- "root" acount password you have provided at the time of installation.
+- Set all password "redhat" only.
+- Make sure you should install linux with option "Server with GUI", by default it's "minimul" installation.
+
+
+Point-02 - 
+Click on "Activity" and open terminal (gnome-terminal - shell).
+Terminal interface with "#" option.
+
+localhost# mkdir work 
+
+
+
+
+- Basic concepts of command/option/arguments.
+   # Command  option Argument(s) 
+
+Command  - Command is a ulitity to take some action.
+OPtion   - OPtion modified the function of the command. (MOre functional now).
+Argument - Argument is data which are needed to execute the command.
+
+- How to create folder - using command "mkdir" 
+
+  Example (with no options)
+# mkdir work 
+# mkdir work1 work2
+# mkdir project-01-data project-02-data
+
+
+- HOw to create file(s) - using command "touch" - it will create empty file.
+  Note: We can create multiple empty files.
+  Examples:-
+  # touch file1.txt
+  # touch file2.txt file2.txt file3.txt 
+  
+- HOw to create file using editor (vim).
+#vim file_name
+press key "i" - for insert mode 
+
+This is my 1st line.
+This is my 2nd line. 
+Continue 
+
+press key "esc" - For lock screen
+press :wq    or :w  or :q or :wq!
+
+w - write 
+q - Quite 
+! - Forcelly 
+
+ 
+
 
 
 
