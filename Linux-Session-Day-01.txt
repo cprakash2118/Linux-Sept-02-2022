@@ -271,6 +271,37 @@ w - write
 q - Quite 
 ! - Forcelly 
 
+==== Lab Exercise-01
+- Login as root user and open terminal.
+- Create directory/folder and files as mentioned beow
+# mkdir work 
+# cd work     (To go inside work use "cd command"
+# Create 4 temp files and two directories.
+file1.txt 
+file2.txt
+file3.txt 
+file4.txt
+
+dir1 
+dir2 
+
+vim myfile  
+
+==================
+-  Verify the contents.
+
+This is my 1st line.
+This is my 2nd line. 
+Continue 
+
+
+=================
+
+# cat myfile  
+=============
+
+
+
  
 
 
