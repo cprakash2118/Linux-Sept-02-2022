@@ -249,3 +249,39 @@ Step 1) Add additional disk of 2GB to your server (server01).
 - Poweron the server and verify your disk.
 
 # parted -l or fdisk -l | grep "Disk /dev/sd" 
+
+===========
+Note: Setup the network configuration:-
+Login as root user.
+
+Open "Oracle Virtual Box". Click on "Setting", Click on "Network", Click on "Adapter 1", 
+Click and Select [Attached to:  "Host-Only Adapter"], click on ok 
+
+======================
+
+# cd /etc/sysconfig/network-scripts/
+# ls -l ifcfg-enp0s3 
+# ifconfig | grep -i flags | grep -i broad | grep -i runn 
+# vim ifcfg-enp0s3
+press "i" key for insert mode.
+ONBOOT=yes
+press "esc" key for lock mode
+:wq 
+
+# ifup enp0s3
+# ifconfig  (get your IP address).
+
+=============
+Putty download link:-
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+
+
+Mputty link.
+https://ttyplus.com/downloads/
+MTPUTTY NO-INSTALLATION (PORTABLE)
+
+
+
+Open mputty and setup the IP.
+
+
