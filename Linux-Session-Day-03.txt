@@ -114,15 +114,17 @@ app2
 
    
   - Create user = user1 to user5  (belongs to unix_adm)
-  - Create user = user11 to user15  (belongs to db_adm)
-  - Create user = user16 to user20  (belongs to devops)
-  - Create user = user21 to user30  (belongs to app1)
-  - Create user = user31 to user40  (belongs to app2)
+  - Create user = user6 to user10  (belongs to db_adm)
+  - Create user = user11 to user15  (belongs to devops)
+  - Create user = user16 to user20  (belongs to app1)
+  - Create user = user21 to user25  (belongs to app2)
  
  
    - pAssword for all users is "redhat"
  
  =================================================
+ LAB-02:-
+ 
  groupadd project 
  Assign "project" group to all users (user1 to 40)
  usermod -G project user1 
