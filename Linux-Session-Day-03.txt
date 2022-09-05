@@ -1,0 +1,132 @@
+Linux-Session-03 - 'Day-03':-
+
+##########
+Dtae:- 02-Sept-2022 - Linux Session:-
+===================================
+Table of Contents:-
+
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+
+Phase-06:- 
+19. Networking Services 
+20. Network CLients.
+21. Network COnfiguration.
+22. Network file sharing services (FTP/NFS/Samaba etc).
+
+Pahse-07:- 
+22. Troubleshooting
+23. Linux Bind 
+24. Linux apache 
+25. Linux Squid 
+26. Linux Mail srvers.
+
+Mock examples (hand-on based Test). 
+##########
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+
+### Concepts - Installation of EL on system (Physical/Virtual)
+  
+Physical machine - Laptop/Dell-PowerEdge servers/ HP GEN X / IBM Power/SOme model Blade server/etc.
+Virtual Machine  - Virtual machines serve same applications as physical machines.
+NOte: ***
+ - Virtual machine installed on hypervisor (Hypervisor - It's OS which allow to create Virtual machine).
+ - Those virtual machine having guest operating systems, later DB or middleware installed on OS and run the application.
+ - Hypervisor (3rd part based software) - which allow to create VIrtual machine.
+ - Hypervisor used here is - "Oracle Virtual Box" ( INstalled this on your system).
+ - We have used CentOS 7.9 with x86_64 arch and build the OS, Also we have mounted the same ISO on your system.
+ - We have used GNOME (GUI interface) and bash (CLI Interface).
+ 
+ - Commands 
+ - User & Group management:-
+   
+  #Users:-
+   Create user - useradd 
+   Delete user - userdel 
+   Modify user - usermod
+   
+   useradd <user_name> 
+   Eg:
+   useradd john 
+   useradd tom 
+   
+   
+  #Groups:-
+   Create group - groupadd 
+   Delete group - groupdel 
+   modify group - groupmod   
+   
+  #groupadd <group_name>
+	Eg:
+	  groupadd unix_team
+ 
+  #passwd (Set password for users).
+   passwd <user_name>(as root user).
+   passwd john 
+   Type:
+   retype:
+   
+   group = unix_team
+   useradd -g <primary_group_name> <user_name>
+   Eg:
+     useradd -g unix_team john  (unix_team is a primary group of john)
+	 usermod -G unix_team tom   (unix_team is a secoundry group of yom)
+   
+   
+
+LAB-01
+Create groups:-
+unix_adm 
+db_adm
+devops 
+app1
+app2 
+
+   
+  - Create user = user1 to user5  (belongs to unix_adm)
+  - Create user = user11 to user15  (belongs to db_adm)
+  - Create user = user16 to user20  (belongs to devops)
+  - Create user = user21 to user30  (belongs to app1)
+  - Create user = user311 to user40  (belongs to app2)
+ 
+ 
+   - pAssword for all users is "redhat"
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
