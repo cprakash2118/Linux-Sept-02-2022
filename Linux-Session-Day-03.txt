@@ -149,6 +149,11 @@ app2
  chown root:app1 APP1
  chown root:app2 APP2
  
+ 
+ Example:- 
+ echo "redhat | passwd --stdin user_name
+ echo "redhat | passwd --stdin user1 
+ 
  ===========
  - NOw only those users part of "project" group can only access "/Project"
  - And everyone can do work on their project only.
