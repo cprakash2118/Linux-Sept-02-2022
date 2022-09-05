@@ -221,4 +221,24 @@ for user_name in {20..25} ; do useradd -g app2 user${user_name}; echo redhat | p
 for user_name in {20..25} ; do userdel -r user${user_name} ; done
 
 
+============
+mkdir -p /project/{UNIX,DB,APP1,APP2,DEVOPS}
+chmod 770 /project
+cd /project 
+chmod 770 UNIX 
+chmod 770 DB 
+chmod 770 DEVOPS 
+chmod 770 APP1
+chmod 770 APP2
+
+ls -l 
+
+ chown root:unix_adm UNIX 
+ chown root:db_adm DB 
+ chown root:devops DEVOPS
+ chown root:app1 APP1
+ chown root:app2 APP2
+
+
+
 
