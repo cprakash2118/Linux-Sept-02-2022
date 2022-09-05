@@ -160,7 +160,65 @@ app2
  - NOw only those users part of "project" group can only access "/Project"
  - And everyone can do work on their project only.
  
- 
- 
- 
-  
+==========================================================
+SOlution:-
+#####
+- Group Creation:-
+for group_name in unix_adm db_adm devops app1 app2 ; do groupadd ${group_name} ; done
+
+- Group Delete 
+for group_name in unix_adm db_adm devops app1 app2 ; do groupdel ${group_name} ; done
+
+#####
+
+user1 to user5 (unix_adm group).
+- User Creation:-
+for user_name in {1..5} ; do useradd -g unix_adm user${user_name}; echo redhat | passwd --stdin user${user_name} ; done
+
+- Delete all users:-
+for user_name in {1..5} ; do userdel -r user${user_name} ; done
+
+
+
+==============
+
+user6 to user10 (db_adm group).
+- User Creation:-
+for user_name in {6..10} ; do useradd -g db_adm user${user_name}; echo redhat | passwd --stdin user${user_name} ; done
+
+- Delete all users:-
+for user_name in {6-10} ; do userdel -r user${user_name} ; done
+
+
+============
+
+user11 to user15 (devops group).
+- User Creation:-
+for user_name in {11..15} ; do useradd -g devops user${user_name}; echo redhat | passwd --stdin user${user_name} ; done
+
+- Delete all users:-
+for user_name in {11..15} ; do userdel -r user${user_name} ; done
+
+
+===================
+
+user1 to user5 (app1 group).
+- User Creation:-
+for user_name in {16..20} ; do useradd -g app1 user${user_name}; echo redhat | passwd --stdin user${user_name} ; done
+
+- Delete all users:-
+for user_name in {16..20} ; do userdel -r user${user_name} ; done
+
+
+
+=====================================================
+
+user1 to user5 (app2 group).
+- User Creation:-
+for user_name in {20..25} ; do useradd -g app2 user${user_name}; echo redhat | passwd --stdin user${user_name} ; done
+
+- Delete all users:-
+for user_name in {20..25} ; do userdel -r user${user_name} ; done
+
+
+
