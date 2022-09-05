@@ -117,12 +117,37 @@ app2
   - Create user = user11 to user15  (belongs to db_adm)
   - Create user = user16 to user20  (belongs to devops)
   - Create user = user21 to user30  (belongs to app1)
-  - Create user = user311 to user40  (belongs to app2)
+  - Create user = user31 to user40  (belongs to app2)
  
  
    - pAssword for all users is "redhat"
  
+ =================================================
+ groupadd project 
+ Assign "project" group to all users (user1 to 40)
+ usermod -G project user1 
+ usermod -G project user2 
  
+ So that user1 will be a part of unix_adm & project.
+ 
+ 
+ mkdir /Project 
+ cd /Project 
+ mkdir UNIX DB DEVOPS APP1 APP2 
+ chmod 770 /Project 
+ chmod 770 UNIX
+ chmod 770 DB
+ chmod 770 DEVOPS
+ chmod 770 APP1
+ chmod 770 APP2
+ 
+ pwd
+ /Project 
+ chown root:unix_adm UNIX 
+ chown root:db_adm DB 
+ chown root:devops DEVOPS
+ chown root:app1 APP1
+ chown root:app2 APP2
  
  
  
