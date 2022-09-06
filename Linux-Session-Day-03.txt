@@ -600,12 +600,656 @@ Filename                                Type            Size    Used    Priority
 
 ######################################## Disk - /dev/sdc ###################################
 
-Lab-04  
+Lab-04 - LVM   
 - Attached disk of 2.5 GB and create 4 primary partitions with 500Mb, use parted command.
+- Create 4 physical volumes
+- Create 1 Volume Group 
+- Create 1 LVM 
+- Install ext4 FS on LVM path and mount to "/lvm_mp1 (permanently)
+- USe LVM 100% size of LVM (Mounted in the server - MP "/lvm_mp1"  and then extend the size of LVM.
+
+####
+SOlution-Lab04 - LVM 
+
+Step 1) Now Create Linux disk partitions (MBR-primary partition) on additional disk (/dev/sdc).
+
+  # parted /dev/sdc mklabel msdos 
+  # parted /dev/sdc mkpart primary ext4 2048s 500MB
+  # parted /dev/sdc mkpart primary ext4 501MB 1000MB
+  # parted /dev/sdc mkpart primary ext4 1001MB 1500MB
+  # parted /dev/sdc mkpart primary ext4 1501MB 2000MB
+  # udevadm settle
+
+
+Output of above commands:-
+
+[root@chandra-trainer-server01 ~]# lsblk
+NAME               MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda                  8:0    0    25G  0 disk
+├─sda1               8:1    0   512M  0 part /boot
+└─sda2               8:2    0  24.5G  0 part
+  ├─rootVG-root    253:0    0  22.5G  0 lvm  /
+  └─rootVG-swapVol 253:1    0     2G  0 lvm  [SWAP]
+sdb                  8:16   0     2G  0 disk
+├─sdb1               8:17   0   237M  0 part /mp_sdb1
+├─sdb2               8:18   0   239M  0 part [SWAP]
+├─sdb3               8:19   0   237M  0 part /mp_sdb3
+└─sdb4               8:20   0 261.3M  0 part /mp_sdb4
+sdc                  8:32   0     3G  0 disk
+├─sdc1               8:33   0   476M  0 part
+├─sdc2               8:34   0   476M  0 part
+├─sdc3               8:35   0 475.9M  0 part
+└─sdc4               8:36   0   476M  0 part
+sdd                  8:48   0     2G  0 disk
+sr0                 11:0    1   9.6G  0 rom
+[root@chandra-trainer-server01 ~]#
+
+
+Step 2) Physical Volume creation:-
+################
+Commands used:-
+
+pvcreate /dev/sdc1
+pvcreate /dev/sdc2
+pvcreate /dev/sdc3
+pvcreate /dev/sdc4
+
+or
+pvcreate /dev/sdc{1..4}
+
+pvscan 
+pvs
+pvdisplay /dev/sdc1
+pvdisplay /dev/sdc2
+pvdisplay /dev/sdc3
+pvdisplay /dev/sdc4
+
+
+################
 
 
 
+
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# pvcreate /dev/sdc1
+  Physical volume "/dev/sdc1" successfully created.
+[root@chandra-trainer-server01 ~]# pvcreate /dev/sdc2
+  Physical volume "/dev/sdc2" successfully created.
+[root@chandra-trainer-server01 ~]# pvcreate /dev/sdc3
+  Physical volume "/dev/sdc3" successfully created.
+[root@chandra-trainer-server01 ~]# pvcreate /dev/sdc4
+  Physical volume "/dev/sdc4" successfully created.
+[root@chandra-trainer-server01 ~]#
+
+
+
+[root@chandra-trainer-server01 ~]# pvscan | grep sdc
+  PV /dev/sdc1                      lvm2 [476.00 MiB]
+  PV /dev/sdc2                      lvm2 [476.00 MiB]
+  PV /dev/sdc3                      lvm2 [475.88 MiB]
+  PV /dev/sdc4                      lvm2 [476.00 MiB]
+[root@chandra-trainer-server01 ~]#
+
+
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc1
+  "/dev/sdc1" is a new physical volume of "476.00 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdc1
+  VG Name
+  PV Size               476.00 MiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               W1trA2-c7o2-jETQ-lVxj-1YKy-OtLW-6uZrXR
+
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc2
+  "/dev/sdc2" is a new physical volume of "476.00 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdc2
+  VG Name
+  PV Size               476.00 MiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               EfK5D7-i68R-sQ2i-9taH-9d8j-Lb3Y-MAYi1c
+
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc3
+  "/dev/sdc3" is a new physical volume of "475.88 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdc3
+  VG Name
+  PV Size               475.88 MiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               1CD5Cf-eCwD-QT6g-7Fyf-G3yC-JEuY-Fn1Sbv
+
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc4
+  "/dev/sdc4" is a new physical volume of "476.00 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdc4
+  VG Name
+  PV Size               476.00 MiB
+  Allocatable           NO
+  PE Size               0
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               ZPQoS4-H3Mx-1Gp7-7nxN-h3xh-1SeG-bUQstc
+
+[root@chandra-trainer-server01 ~]#
+
+
+
+Step 3) Volume Group creation:-
+################
+Commands used:-
+
+vgcreate -s 8M vg_name-01 /dev/sdc{1..3}
+vgs
+vgscan 
+vgdisplay 
+
+###############
+
+[root@chandra-trainer-server01 ~]# vgcreate -s 8M vg_name-01 /dev/sdc{1..3}
+  Volume group "vg_name-01" successfully created
+[root@chandra-trainer-server01 ~]# vgscan | grep vg_name
+  Found volume group "vg_name-01" using metadata type lvm2
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# vgs | grep vg_name
+  vg_name-01   3   0   0 wz--n-   1.38g 1.38g
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name
+  Volume group "vg_name" not found
+  Cannot process volume group vg_name
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name-01
+  --- Volume group ---
+  VG Name               vg_name-01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               1.38 GiB
+  PE Size               8.00 MiB
+  Total PE              177
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       177 / 1.38 GiB
+  VG UUID               oZfjOG-wHMo-6Gj0-qkwn-e5dX-lO3P-KynGRU
+
+[root@chandra-trainer-server01 ~]# expr 8 \* 177
+1416
+[root@chandra-trainer-server01 ~]# expr 1416 / 1024
+1
+[root@chandra-trainer-server01 ~]# bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+scale=4
+1416 / 1024
+1.3828
+^C
+(interrupt) Exiting bc.
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc{1..3}
+  --- Physical volume ---
+  PV Name               /dev/sdc1
+  VG Name               vg_name-01
+  PV Size               476.00 MiB / not usable 4.00 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               W1trA2-c7o2-jETQ-lVxj-1YKy-OtLW-6uZrXR
+
+  --- Physical volume ---
+  PV Name               /dev/sdc2
+  VG Name               vg_name-01
+  PV Size               476.00 MiB / not usable 4.00 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               EfK5D7-i68R-sQ2i-9taH-9d8j-Lb3Y-MAYi1c
+
+  --- Physical volume ---
+  PV Name               /dev/sdc3
+  VG Name               vg_name-01
+  PV Size               475.88 MiB / not usable 3.88 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               1CD5Cf-eCwD-QT6g-7Fyf-G3yC-JEuY-Fn1Sbv
+
+[root@chandra-trainer-server01 ~]#
+
+
+Step 4) Logical Volume creation:-
+################
+Commands used:-
+
+
+
+
+
+
+
+---------------------
+
+[root@chandra-trainer-server01 ~]# lvcreate -l +40 -n lvm_01 vg_name-01
+  Logical volume "lvm_01" created.
+[root@chandra-trainer-server01 ~]# lvdisplay /dev/vg_name-01/lvm_01
+  --- Logical volume ---
+  LV Path                /dev/vg_name-01/lvm_01
+  LV Name                lvm_01
+  VG Name                vg_name-01
+  LV UUID                W19gMH-hath-GNi2-i6Zg-MMaX-ukG9-JoZr9Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-trainer-server01.example.com, 2022-09-06 17:42:45 +0530
+  LV Status              available
+  # open                 0
+  LV Size                320.00 MiB
+  Current LE             40
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-trainer-server01 ~]# bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+320 / 8
+40
+^C
+(interrupt) Exiting bc.
+[root@chandra-trainer-server01 ~]# vgscan
+  Reading volume groups from cache.
+  Found volume group "vg_name-01" using metadata type lvm2
+  Found volume group "rootVG" using metadata type lvm2
+[root@chandra-trainer-server01 ~]# lvscan
+  ACTIVE            '/dev/vg_name-01/lvm_01' [320.00 MiB] inherit
+  ACTIVE            '/dev/rootVG/swapVol' [2.00 GiB] inherit
+  ACTIVE            '/dev/rootVG/root' [<22.50 GiB] inherit
+[root@chandra-trainer-server01 ~]# lvs
+  LV      VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root    rootVG     -wi-ao---- <22.50g
+  swapVol rootVG     -wi-ao----   2.00g
+  lvm_01  vg_name-01 -wi-a----- 320.00m
+[root@chandra-trainer-server01 ~]#
 
 
   
+  ============
   
+[root@chandra-trainer-server01 ~]# vgcreate -s 8M vg_name-01 /dev/sdc{1..3}
+  Volume group "vg_name-01" successfully created
+[root@chandra-trainer-server01 ~]# vgscan | grep vg_name
+  Found volume group "vg_name-01" using metadata type lvm2
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# vgs | grep vg_name
+  vg_name-01   3   0   0 wz--n-   1.38g 1.38g
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name
+  Volume group "vg_name" not found
+  Cannot process volume group vg_name
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name-01
+  --- Volume group ---
+  VG Name               vg_name-01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               1.38 GiB
+  PE Size               8.00 MiB
+  Total PE              177
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       177 / 1.38 GiB
+  VG UUID               oZfjOG-wHMo-6Gj0-qkwn-e5dX-lO3P-KynGRU
+
+[root@chandra-trainer-server01 ~]# expr 8 \* 177
+1416
+[root@chandra-trainer-server01 ~]# expr 1416 / 1024
+1
+[root@chandra-trainer-server01 ~]# bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+scale=4
+1416 / 1024
+1.3828
+^C
+(interrupt) Exiting bc.
+[root@chandra-trainer-server01 ~]# pvdisplay /dev/sdc{1..3}
+  --- Physical volume ---
+  PV Name               /dev/sdc1
+  VG Name               vg_name-01
+  PV Size               476.00 MiB / not usable 4.00 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               W1trA2-c7o2-jETQ-lVxj-1YKy-OtLW-6uZrXR
+
+  --- Physical volume ---
+  PV Name               /dev/sdc2
+  VG Name               vg_name-01
+  PV Size               476.00 MiB / not usable 4.00 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               EfK5D7-i68R-sQ2i-9taH-9d8j-Lb3Y-MAYi1c
+
+  --- Physical volume ---
+  PV Name               /dev/sdc3
+  VG Name               vg_name-01
+  PV Size               475.88 MiB / not usable 3.88 MiB
+  Allocatable           yes
+  PE Size               8.00 MiB
+  Total PE              59
+  Free PE               59
+  Allocated PE          0
+  PV UUID               1CD5Cf-eCwD-QT6g-7Fyf-G3yC-JEuY-Fn1Sbv
+
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name-01
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name-01
+  --- Volume group ---
+  VG Name               vg_name-01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               1.38 GiB
+  PE Size               8.00 MiB
+  Total PE              177
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       177 / 1.38 GiB
+  VG UUID               oZfjOG-wHMo-6Gj0-qkwn-e5dX-lO3P-KynGRU
+
+[root@chandra-trainer-server01 ~]# lvcreate -l +40 -n lvm_01 vg_name-01
+  Logical volume "lvm_01" created.
+[root@chandra-trainer-server01 ~]# lvdisplay /dev/vg_name-01/lvm_01
+  --- Logical volume ---
+  LV Path                /dev/vg_name-01/lvm_01
+  LV Name                lvm_01
+  VG Name                vg_name-01
+  LV UUID                W19gMH-hath-GNi2-i6Zg-MMaX-ukG9-JoZr9Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-trainer-server01.example.com, 2022-09-06 17:42:45 +0530
+  LV Status              available
+  # open                 0
+  LV Size                320.00 MiB
+  Current LE             40
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-trainer-server01 ~]# bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+320 / 8
+40
+^C
+(interrupt) Exiting bc.
+[root@chandra-trainer-server01 ~]# vgscan
+  Reading volume groups from cache.
+  Found volume group "vg_name-01" using metadata type lvm2
+  Found volume group "rootVG" using metadata type lvm2
+[root@chandra-trainer-server01 ~]# lvscan
+  ACTIVE            '/dev/vg_name-01/lvm_01' [320.00 MiB] inherit
+  ACTIVE            '/dev/rootVG/swapVol' [2.00 GiB] inherit
+  ACTIVE            '/dev/rootVG/root' [<22.50 GiB] inherit
+[root@chandra-trainer-server01 ~]# lvs
+  LV      VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root    rootVG     -wi-ao---- <22.50g
+  swapVol rootVG     -wi-ao----   2.00g
+  lvm_01  vg_name-01 -wi-a----- 320.00m
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# lvdisplay /dev/vg_name-01/lvm_01
+  --- Logical volume ---
+  LV Path                /dev/vg_name-01/lvm_01
+  LV Name                lvm_01
+  VG Name                vg_name-01
+  LV UUID                W19gMH-hath-GNi2-i6Zg-MMaX-ukG9-JoZr9Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-trainer-server01.example.com, 2022-09-06 17:42:45 +0530
+  LV Status              available
+  # open                 0
+  LV Size                320.00 MiB
+  Current LE             40
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-trainer-server01 ~]# mkfs.ext4 /dev/vg_name-01/lvm_01
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+81920 inodes, 327680 blocks
+16384 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=33947648
+40 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks:
+        8193, 24577, 40961, 57345, 73729, 204801, 221185
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@chandra-trainer-server01 ~]# blkid /dev/vg_name-01/lvm_01
+/dev/vg_name-01/lvm_01: UUID="0a347671-382c-43a6-ab49-1a931ce40736" TYPE="ext4"
+[root@chandra-trainer-server01 ~]#  UUID="0a347671-382c-43a6-ab49-1a931ce40736" ^C
+[root@chandra-trainer-server01 ~]# vim /etc/fstab
+[root@chandra-trainer-server01 ~]# mkdir /lvm_mp1
+[root@chandra-trainer-server01 ~]# mount -a
+[root@chandra-trainer-server01 ~]# df -THP
+Filesystem                     Type      Size  Used Avail Use% Mounted on
+devtmpfs                       devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                          tmpfs     1.5G  9.7M  1.5G   1% /run
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/rootVG-root        xfs        25G   15G  9.6G  61% /
+/dev/sdb4                      vfat      274M     0  274M   0% /mp_sdb4
+/dev/sdb3                      ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb1                      ext4      237M  233M     0 100% /mp_sdb1
+/dev/sda1                      xfs       534M  190M  345M  36% /boot
+tmpfs                          tmpfs     299M   13k  299M   1% /run/user/42
+tmpfs                          tmpfs     299M     0  299M   0% /run/user/0
+/dev/mapper/vg_name--01-lvm_01 ext4      317M  2.2M  294M   1% /lvm_mp1
+[root@chandra-trainer-server01 ~]# dd if=/dev/zero of=/lvm_mp1/file1 bs=1M count=500
+dd: error writing ‘/lvm_mp1/file1’: No space left on device
+296+0 records in
+295+0 records out
+310243328 bytes (310 MB) copied, 5.22165 s, 59.4 MB/s
+[root@chandra-trainer-server01 ~]# df -THP
+Filesystem                     Type      Size  Used Avail Use% Mounted on
+devtmpfs                       devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                          tmpfs     1.5G  9.7M  1.5G   1% /run
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/rootVG-root        xfs        25G   15G  9.6G  61% /
+/dev/sdb4                      vfat      274M     0  274M   0% /mp_sdb4
+/dev/sdb3                      ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb1                      ext4      237M  233M     0 100% /mp_sdb1
+/dev/sda1                      xfs       534M  190M  345M  36% /boot
+tmpfs                          tmpfs     299M   13k  299M   1% /run/user/42
+tmpfs                          tmpfs     299M     0  299M   0% /run/user/0
+/dev/mapper/vg_name--01-lvm_01 ext4      317M  313M     0 100% /lvm_mp1
+[root@chandra-trainer-server01 ~]# vgdisplay
+  --- Volume group ---
+  VG Name               vg_name-01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               1
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               1.38 GiB
+  PE Size               8.00 MiB
+  Total PE              177
+  Alloc PE / Size       40 / 320.00 MiB
+  Free  PE / Size       137 / 1.07 GiB
+  VG UUID               oZfjOG-wHMo-6Gj0-qkwn-e5dX-lO3P-KynGRU
+
+  --- Volume group ---
+  VG Name               rootVG
+  System ID
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <24.50 GiB
+  PE Size               4.00 MiB
+  Total PE              6271
+  Alloc PE / Size       6271 / <24.50 GiB
+  Free  PE / Size       0 / 0
+  VG UUID               IoUOGE-471F-oLH4-qVv8-exos-0J0i-feLf3x
+
+[root@chandra-trainer-server01 ~]# vgdisplay vg_name-01
+  --- Volume group ---
+  VG Name               vg_name-01
+  System ID
+  Format                lvm2
+  Metadata Areas        3
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               1
+  Max PV                0
+  Cur PV                3
+  Act PV                3
+  VG Size               1.38 GiB
+  PE Size               8.00 MiB
+  Total PE              177
+  Alloc PE / Size       40 / 320.00 MiB
+  Free  PE / Size       137 / 1.07 GiB
+  VG UUID               oZfjOG-wHMo-6Gj0-qkwn-e5dX-lO3P-KynGRU
+
+[root@chandra-trainer-server01 ~]# lvextend -l +40 -n /dev/vg_name-01/lvm_01
+  Size of logical volume vg_name-01/lvm_01 changed from 320.00 MiB (40 extents) to 640.00 MiB (80 extents).
+  Logical volume vg_name-01/lvm_01 successfully resized.
+[root@chandra-trainer-server01 ~]# lvdisplay /dev/vg_name-01/lvm_01
+  --- Logical volume ---
+  LV Path                /dev/vg_name-01/lvm_01
+  LV Name                lvm_01
+  VG Name                vg_name-01
+  LV UUID                W19gMH-hath-GNi2-i6Zg-MMaX-ukG9-JoZr9Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-trainer-server01.example.com, 2022-09-06 17:42:45 +0530
+  LV Status              available
+  # open                 1
+  LV Size                640.00 MiB
+  Current LE             80
+  Segments               2
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-trainer-server01 ~]# df -THP
+Filesystem                     Type      Size  Used Avail Use% Mounted on
+devtmpfs                       devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                          tmpfs     1.5G  9.7M  1.5G   1% /run
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/rootVG-root        xfs        25G   15G  9.6G  61% /
+/dev/sdb4                      vfat      274M     0  274M   0% /mp_sdb4
+/dev/sdb3                      ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb1                      ext4      237M  233M     0 100% /mp_sdb1
+/dev/sda1                      xfs       534M  190M  345M  36% /boot
+tmpfs                          tmpfs     299M   13k  299M   1% /run/user/42
+tmpfs                          tmpfs     299M     0  299M   0% /run/user/0
+/dev/mapper/vg_name--01-lvm_01 ext4      317M  313M     0 100% /lvm_mp1
+[root@chandra-trainer-server01 ~]# resize2fs /dev/mapper/vg_name--01-lvm_01
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/mapper/vg_name--01-lvm_01 is mounted on /lvm_mp1; on-line resizing required
+old_desc_blocks = 3, new_desc_blocks = 5
+The filesystem on /dev/mapper/vg_name--01-lvm_01 is now 655360 blocks long.
+
+[root@chandra-trainer-server01 ~]# df -THP
+Filesystem                     Type      Size  Used Avail Use% Mounted on
+devtmpfs                       devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                          tmpfs     1.5G  9.7M  1.5G   1% /run
+tmpfs                          tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/rootVG-root        xfs        25G   15G  9.6G  61% /
+/dev/sdb4                      vfat      274M     0  274M   0% /mp_sdb4
+/dev/sdb3                      ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb1                      ext4      237M  233M     0 100% /mp_sdb1
+/dev/sda1                      xfs       534M  190M  345M  36% /boot
+tmpfs                          tmpfs     299M   13k  299M   1% /run/user/42
+tmpfs                          tmpfs     299M     0  299M   0% /run/user/0
+/dev/mapper/vg_name--01-lvm_01 ext4      642M  313M  295M  52% /lvm_mp1
+[root@chandra-trainer-server01 ~]#
+
+==============
