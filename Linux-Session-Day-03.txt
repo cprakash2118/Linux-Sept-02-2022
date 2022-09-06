@@ -240,24 +240,13 @@ ls -l
  chown root:app2 APP2
 
 ==================================================
-Disk/File System Management.
-
-Step 1) Add additional disk of 2GB to your server (server01).
-
-- Poweroff the server.
-- Open "Oracle Virtual Box". Click on "Setting", Click on "Storage", Controller-Sata- Click on "Add Hard Disk" button, clieck on "Create Hard disk" and complete the process.
-- Poweron the server and verify your disk.
-
-# parted -l or fdisk -l | grep "Disk /dev/sd" 
-
-===========
+======================
 Note: Setup the network configuration:-
 Login as root user.
 
 Open "Oracle Virtual Box". Click on "Setting", Click on "Network", Click on "Adapter 1", 
 Click and Select [Attached to:  "Host-Only Adapter"], click on ok 
 
-======================
 
 # cd /etc/sysconfig/network-scripts/
 # ls -l ifcfg-enp0s3 
@@ -283,5 +272,19 @@ MTPUTTY NO-INSTALLATION (PORTABLE)
 
 
 Open mputty and setup the IP.
+====================================================================================
+Lab-01-Disk Management
 
 
+Disk/File System Management.
+
+Step 1) Add additional disk of 2GB to your server (server01).
+
+- Poweroff the server.
+- Open "Oracle Virtual Box". Click on "Setting", Click on "Storage", Controller-Sata- Click on "Add Hard Disk" button, clieck on "Create Hard disk" and complete the process.
+- Poweron the server and verify your disk.
+
+# parted -l 
+# fdisk -l | grep "Disk /dev/sd" 
+
+===========
