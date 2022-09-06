@@ -278,8 +278,8 @@ Lab-01-Disk Management
 
 Disk/File System Management.
 
+####
 Step 1) Add additional disk of 2GB to your server (server01).
-
 - Poweroff the server.
 - Open "Oracle Virtual Box". Click on "Setting", Click on "Storage", Controller-Sata- Click on "Add Hard Disk" button, clieck on "Create Hard disk" and complete the process.
 - Poweron the server and verify your disk.
@@ -287,4 +287,128 @@ Step 1) Add additional disk of 2GB to your server (server01).
 # parted -l 
 # fdisk -l | grep "Disk /dev/sd" 
 
-===========
+
+Verify: # fdisk -l | grep "Disk /dev/sd"
+
+####
+Step 2) Using the mentioned disk.
+
+Now Create Linux disk partitions (MBR-primary partition) on additional disk (/dev/dvb).
+  
+  # parted /dev/sdb  (Interactive interface).
+  
+  [root@chandra-trainer-server01 ~]# parted /dev/sdb
+GNU Parted 3.1
+Using /dev/sdb
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) help
+
+(parted) mkpart
+Partition type?  primary/extended? primary
+File system type?  [ext2]? ext4
+Start? 2048s
+End? 250M
+(parted) print
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End    Size   Type     File system  Flags
+ 1      1049kB  250MB  249MB  primary
+
+(parted) help
+  align-check TYPE N                        check partition N for TYPE(min|opt) alignment
+  help [COMMAND]                           print general help, or help on COMMAND
+  mklabel,mktable LABEL-TYPE               create a new disklabel (partition table)
+  mkpart PART-TYPE [FS-TYPE] START END     make a partition
+  name NUMBER NAME                         name partition NUMBER as NAME
+  print [devices|free|list,all|NUMBER]     display the partition table, available devices, free space,
+        all found partitions, or a particular partition
+  quit                                     exit program
+  rescue START END                         rescue a lost partition near START and END
+
+  resizepart NUMBER END                    resize partition NUMBER
+  rm NUMBER                                delete partition NUMBER
+  select DEVICE                            choose the device to edit
+  disk_set FLAG STATE                      change the FLAG on selected device
+  disk_toggle [FLAG]                       toggle the state of FLAG on selected device
+  set NUMBER FLAG STATE                    change the FLAG on partition NUMBER
+  toggle [NUMBER [FLAG]]                   toggle the state of FLAG on partition NUMBER
+  unit UNIT                                set the default unit to UNIT
+  version                                  display the version number and copyright information of GNU
+        Parted
+(parted) mkpart
+Partition type?  primary/extended?
+Partition type?  primary/extended? primary
+File system type?  [ext2]? ext4
+Start? 250M
+End? 500M
+(parted) print
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End    Size   Type     File system  Flags
+ 1      1049kB  250MB  249MB  primary
+ 2      250MB   500MB  251MB  primary
+
+(parted) mkpart
+Partition type?  primary/extended? primary
+File system type?  [ext2]? ext4
+Start? 501M
+End? 750M
+(parted) print
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End    Size   Type     File system  Flags
+ 1      1049kB  250MB  249MB  primary
+ 2      250MB   500MB  251MB  primary
+ 3      501MB   750MB  249MB  primary
+
+(parted) mkpart
+Partition type?  primary/extended? primary
+File system type?  [ext2]? ext4
+Start? 751M
+End? 1025M
+Warning: The resulting partition is not properly aligned for best performance.
+Ignore/Cancel? ignore
+(parted) print
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdb: 2147MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  250MB   249MB  primary
+ 2      250MB   500MB   251MB  primary
+ 3      501MB   750MB   249MB  primary
+ 4      751MB   1025MB  274MB  primary
+
+(parted) mkpart
+Error: Can't create any more partitions.
+(parted)
+
+
+  
+  or 
+  # parted /dev/vdb mklabel msdos 
+  # parted /dev/vdb mkpart primary ext4 2048s 200MB
+  # parted /dev/vdb mkpart primary ext4 201MB 401MB
+  # parted /dev/vdb mkpart primary ext4 402MB 602MB
+  # parted /dev/vdb mkpart primary ext4 603MB 804MB
+  # udevadm settle
+  
+ MBR-primary partition.
+ ONly 4 primary partition can be created 
+ 
+  
+  
