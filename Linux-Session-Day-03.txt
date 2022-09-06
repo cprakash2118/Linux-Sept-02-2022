@@ -496,9 +496,6 @@ Disk /dev/sdd: 2147 MB, 2147483648 bytes, 4194304 sectors
 [root@chandra-trainer-server01 ~]#
 
 
-
-Step 2)   /dev/sdb disk operations.
- 
 [root@chandra-trainer-server01 ~]# lsblk
 NAME               MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 sda                  8:0    0    25G  0 disk
@@ -514,6 +511,31 @@ sdb                  8:16   0     2G  0 disk
 sdc                  8:32   0     2G  0 disk
 sdd                  8:48   0     2G  0 disk
 sr0                 11:0    1   9.6G  0 rom
+[root@chandra-trainer-server01 ~]# 
+
+
+Step 2)   /dev/sdb disk operations.
+#######
+Used for :- Linux partitions (/dev/sdb{1..4})
+
+/dev/sdb1 - Linux partition, format with ext4 file system (Formatting - Placing new type of FS), mount to any directory.
+/dev/sdb2 - Linux partition, format with swap FS, actiave the swap memoery.
+NOte: Swap FS can not be mount.
+/dev/sdb3 - Linux partition, format with ext2 file system (Formatting - Placing new type of FS), mount to any directory.
+/dev/sdb4 - Linux partition, format with vfat file system (Formatting - Placing new type of FS), mount to any directory.
+
+
+[root@chandra-trainer-server01 ~]# swapon -s  | grep /dev/sdb
+/dev/sdb2                               partition       244732  0       -2
+[root@chandra-trainer-server01 ~]# df -THP | grep /dev/sdb
+/dev/sdb4               vfat      274M     0  274M   0% /mp_sdb4
+/dev/sdb3               ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb1               ext4      237M  2.2M  218M   1% /mp_sdb1
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]#
+#######
+
+
 [root@chandra-trainer-server01 ~]# mkfs.ext2 /dev/sdb3
 mke2fs 1.42.9 (28-Dec-2013)
 Filesystem label=
@@ -562,8 +584,24 @@ tmpfs                   tmpfs     299M     0  299M   0% /run/user/0
 /dev/sdb4               vfat      274M     0  274M   0% /mp_sdb4
 [root@chandra-trainer-server01 ~]#
 
+[root@chandra-trainer-server01 ~]# free -m -t
+              total        used        free      shared  buff/cache   available
+Mem:           2845         390        2082          11         373        2295
+Swap:          2286           0        2286
+Total:         5132         390        4369
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]#
+[root@chandra-trainer-server01 ~]# swapon -s
+Filename                                Type            Size    Used    Priority
+/dev/sdb2                               partition       244732  0       -2
+/dev/dm-1                               partition       2097148 0       -3
+[root@chandra-trainer-server01 ~]#
 
 
+######################################## Disk - /dev/sdc ###################################
+
+Lab-04  
+- Attached disk of 2.5 GB and create 4 primary partitions with 500Mb, use parted command.
 
 
 
