@@ -482,6 +482,86 @@ Lab-03
 - Swap size must be increased.
 
 =============
+======================================================================================================
+All disks from (/dev/sdb to /dev/sdd).
+
+
+Step 1) Attached disks from (/dev/sdb to /dev/sdd).
+
+[root@chandra-trainer-server01 ~]# fdisk -l | grep "Disk /dev/sd"
+Disk /dev/sda: 26.8 GB, 26843545600 bytes, 52428800 sectors
+Disk /dev/sdb: 2147 MB, 2147483648 bytes, 4194304 sectors
+Disk /dev/sdc: 2147 MB, 2147483648 bytes, 4194304 sectors
+Disk /dev/sdd: 2147 MB, 2147483648 bytes, 4194304 sectors
+[root@chandra-trainer-server01 ~]#
+
+
+
+Step 2)   /dev/sdb disk operations.
+ 
+[root@chandra-trainer-server01 ~]# lsblk
+NAME               MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda                  8:0    0    25G  0 disk
+├─sda1               8:1    0   512M  0 part /boot
+└─sda2               8:2    0  24.5G  0 part
+  ├─rootVG-root    253:0    0  22.5G  0 lvm  /
+  └─rootVG-swapVol 253:1    0     2G  0 lvm  [SWAP]
+sdb                  8:16   0     2G  0 disk
+├─sdb1               8:17   0   237M  0 part /mp_sdb1
+├─sdb2               8:18   0   239M  0 part [SWAP]
+├─sdb3               8:19   0   237M  0 part
+└─sdb4               8:20   0 261.3M  0 part
+sdc                  8:32   0     2G  0 disk
+sdd                  8:48   0     2G  0 disk
+sr0                 11:0    1   9.6G  0 rom
+[root@chandra-trainer-server01 ~]# mkfs.ext2 /dev/sdb3
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+60720 inodes, 242688 blocks
+12134 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=67371008
+30 block groups
+8192 blocks per group, 8192 fragments per group
+2024 inodes per group
+Superblock backups stored on blocks:
+        8193, 24577, 40961, 57345, 73729, 204801, 221185
+
+Allocating group tables: done
+Writing inode tables: done
+Writing superblocks and filesystem accounting information: done
+
+[root@chandra-trainer-server01 ~]# mkfs.vfat /dev/sdb4
+mkfs.fat 3.0.20 (12 Jun 2013)
+[root@chandra-trainer-server01 ~]# blkid /dev/sdb3
+/dev/sdb3: UUID="6c3ddad1-5056-4ee0-93a3-e114ef388f04" TYPE="ext2"
+[root@chandra-trainer-server01 ~]# vim /etc/fstab
+[root@chandra-trainer-server01 ~]# blkid /dev/sdb4
+/dev/sdb4: SEC_TYPE="msdos" UUID="2B10-05E7" TYPE="vfat"
+[root@chandra-trainer-server01 ~]# vim /etc/fstab
+[root@chandra-trainer-server01 ~]# mount -a
+mount: unknown filesystem type 'vfst'
+[root@chandra-trainer-server01 ~]# vim /etc/fstab
+[root@chandra-trainer-server01 ~]# mount -a
+[root@chandra-trainer-server01 ~]# df -THP
+Filesystem              Type      Size  Used Avail Use% Mounted on
+devtmpfs                devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                   tmpfs     1.5G     0  1.5G   0% /dev/shm
+tmpfs                   tmpfs     1.5G  9.7M  1.5G   1% /run
+tmpfs                   tmpfs     1.5G     0  1.5G   0% /sys/fs/cgroup
+/dev/mapper/rootVG-root xfs        25G   15G  9.6G  61% /
+/dev/sdb1               ext4      237M  2.2M  218M   1% /mp_sdb1
+/dev/sda1               xfs       534M  190M  345M  36% /boot
+tmpfs                   tmpfs     299M  8.2k  299M   1% /run/user/42
+tmpfs                   tmpfs     299M     0  299M   0% /run/user/0
+/dev/sdb3               ext2      241M  2.2M  227M   1% /mp_sdb3
+/dev/sdb4               vfat      274M     0  274M   0% /mp_sdb4
+[root@chandra-trainer-server01 ~]#
+
 
 
 
