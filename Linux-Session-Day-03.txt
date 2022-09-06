@@ -845,7 +845,8 @@ Step 4) Logical Volume creation:-
 ################
 Commands used:-
 
-
+lvcreate -l +40 -n lvm_01 vg_name-01
+lvdisplay /dev/vg_name-01/lvm_01
 
 
 
@@ -1252,4 +1253,60 @@ tmpfs                          tmpfs     299M     0  299M   0% /run/user/0
 /dev/mapper/vg_name--01-lvm_01 ext4      642M  313M  295M  52% /lvm_mp1
 [root@chandra-trainer-server01 ~]#
 
-==============
+###########################################################################################
+###########################################################################################
+============== QUick Recap of LVM Concepts:-
+Step 1) Now Create Linux disk partitions (MBR-primary partition) on additional disk (/dev/sdc).
+
+  # parted /dev/sdc mklabel msdos 
+  # parted /dev/sdc mkpart primary ext4 2048s 500MB
+  # parted /dev/sdc mkpart primary ext4 501MB 1000MB
+  # parted /dev/sdc mkpart primary ext4 1001MB 1500MB
+  # parted /dev/sdc mkpart primary ext4 1501MB 2000MB
+  # udevadm settle
+  
+Step 2) Physical Volume creation:-
+################
+Commands used:-
+
+pvcreate /dev/sdc1
+pvcreate /dev/sdc2
+pvcreate /dev/sdc3
+pvcreate /dev/sdc4
+
+
+Step 3) Volume Group creation:-
+################
+Commands used:-
+
+vgcreate -s 8M vg_name-01 /dev/sdc{1..3}
+vgs
+vgscan 
+vgdisplay 
+
+###############
+
+Step 4) Logical Volume creation:-
+################
+Commands used:-
+
+lvcreate -l +40 -n lvm_01 vg_name-01
+lvdisplay /dev/vg_name-01/lvm_01
+
+mkfs.ext4 /dev/vg_name-01/lvm_01
+
+blkid /dev/vg_name-01/lvm_01
+
+vim /etc/fstab
+mkdir /lvm_mp1
+mount -a
+
+dd if=/dev/zero of=/lvm_mp1/file1 bs=1M count=500
+
+df -THP
+vgdisplay vg_name-01
+lvextend -l +40 -n /dev/vg_name-01/lvm_01
+lvdisplay /dev/vg_name-01/lvm_01
+df -THP
+resize2fs /dev/mapper/vg_name--01-lvm_01
+df -THP
