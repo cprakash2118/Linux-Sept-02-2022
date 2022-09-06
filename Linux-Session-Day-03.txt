@@ -429,6 +429,59 @@ Lab-02
 - /dev/sdc1 and /dev/sdc2   - permanent mounting (w.r.t - /mp_sdc1   & /mp_sdc2 ; FS=ext2  
 -  /dev/sdc3 and /dev/sdc4  - Temp mounting (w.r.t - /mp_sdc3   & /mp_sdc4}  ; FS=ext4
 
+  # parted /dev/sdb mklabel msdos 
+  # parted /dev/sdd mkpart primary ext4 2048s 200MB
+  # parted /dev/sdb mkpart primary ext4 201MB 401MB
+  # parted /dev/sdb mkpart primary ext4 402MB 602MB
+  # parted /dev/vdb mkpart primary ext4 603MB 804MB
+  # udevadm settle
+  
+  
+
+SOlution:-
+  # parted /dev/sdc mklabel msdos 
+  # parted /dev/sdc mkpart primary ext4 2048s 200MB
+  # parted /dev/sdc mkpart primary ext4 201MB 401MB
+  # parted /dev/sdc mkpart primary ext4 402MB 602MB
+  # parted /dev/sdc mkpart primary ext4 603MB 804MB
+  # udevadm settle
+  
+  # mkfs.ext2 /dev/sdc1 it must be mounted on /mp_sdc1 
+  # blkid /dev/sdc1   
+  
+  # vim /etc/fstab 
+  UUID="JHDSGJKkj"   /mp_sdc1   ext2  defaults 0 0 
+  
+  # mkfs.ext2 /dev/sdc2
+  #  # blkid /dev/sdc2
+  # vim /etc/fstab 
+  UUID="JHDSGJKkj"   /mp_sdc2   ext2  defaults 0 0
+
+  # mount a- 
+  
+  
+  Temp mounting 
+  # mkfs.ext4 /dev/sdc3
+  # blkid /dev/sdc3 
+  
+   #mount  /dev/sdc3  /mp_sdc3     
+  
+  ===============================
+  
+  Temp mounting 
+  # mkfs.ext4 /dev/sdc4
+  # blkid /dev/sdc4
+  
+   #mount  /dev/sdc4 /mp_sdc4
+   
+================
+Lab-03  
+- Attached disk of 1 GB and create 1 primary partitions with 800Mb, use parted command.
+- make swap file system on above partition.
+- Make permanent entry using UUID
+- Swap size must be increased.
+
+=============
 
 
 
