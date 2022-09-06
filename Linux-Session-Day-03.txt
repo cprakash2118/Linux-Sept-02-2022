@@ -422,6 +422,13 @@ UUID="ksjd:aksjdhsaj5:lajdhaksu8:kjjashdkj999"
 # mount /dev/sdb1 /mp_sdb1 
 # df -THP 
 You should be able to see the mount point, able to update the data to the device (d/dev/sdb).
+===============
+Lab-02
+
+- Attached disk of 1 GB and create 4 primary partitions using parted command.
+- /dev/sdc1 and /dev/sdc2   - permanent mounting (w.r.t - /mp_sdc1   & /mp_sdc2 ; FS=ext2  
+-  /dev/sdc3 and /dev/sdc4  - Temp mounting (w.r.t - /mp_sdc3   & /mp_sdc4}  ; FS=ext4
+
 
 
 
