@@ -378,4 +378,26 @@ Verify the user access same as previous (This time directory changed).
 =======================##############################################
 LABs-03 Lab-01-Recap-phase02/3/4/5
 ####
+
+- Attached disk of 4 GB and create 4 primary partitions using parted command.
+- Each partition must be having exactly 500MB size.
+- Use all 4 primary partitions for Physical Volume (PV).
+- Use all these 4 PVs to create required VG (VOlume Group) with a name "vg_disk_03_sdc".
+- While creating mentioned VG (vg_disk_03_sdc) PE (Physical Extend) size must be 32MB.
+- Create LV (Logical VOlume) as per details mentioned below.
+   - LV name must be "lv_disk_03_sdc"
+   - size must be between 250Mb to 270Mb.
+     Verify size (lvdisplay /dev/vg_disk_03_sdc/lv_disk_03_sdc).
+   - LVM "lv_disk_03_sdc" must be mounted on "/lvm_mp1" with ext4 file system.
+     (Verify the output - df -THP).
+   - Now use dd command and utilized the LVM disk space 100%.
+     (Hint - dd if=/dev/zero of=/lvm_mp1/file1 bs=1M count=300)
+   - Check the disk space for "/lvm_mp1" mount point and if it's used 90% or more then extend the LVM (	 /dev/vg_disk_03_sdc/lv_disk_03_sdc) by 300MB more size.
+
+    (Hint below command)
+	# lvextend -l +(No_OF_PE)  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+	# resize2fs  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+   - Verify the output and confirmthe same.
+	 
+
    
