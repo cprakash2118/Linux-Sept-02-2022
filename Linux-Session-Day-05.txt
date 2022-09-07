@@ -1,0 +1,228 @@
+
+Day-05 - Linux - session
+
+
+
+################
+Table of Contents:-
+
+##
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+##
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+##
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+
+##
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+##
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+===========================================================
+##
+Phase-06:- 
+19. Networking Services 
+20. Network CLients.
+21. Network COnfiguration.
+22. Network file sharing services (FTP/NFS/Samaba etc).
+
+##
+Pahse-07:- 
+22. Troubleshooting
+23. Linux Bind 
+24. Linux apache 
+25. Linux Squid 
+26. Linux Mail srvers.
+#################################################
+======================== Quick Recap =======================================
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+
+
+### Concepts - Installation of Enterprise Linux (EL) on system (Physical/Virtual).
+  
+Physical machine - Laptop/Dell-PowerEdge servers/ HP GEN X / IBM Power/SOme model Blade server/etc.
+Virtual Machine  - Virtual machines serve same applications as physical machines.
+NOte: ***
+ - Virtual machine installed on hypervisor (Hypervisor - It's OS which allow to create Virtual machine).
+ - Those virtual machine having guest operating systems, later DB or middleware installed on OS and run the application.
+ - Hypervisor (3rd part based software) - which allow to create VIrtual machine.
+ - Hypervisor used here is - "Oracle Virtual Box" ( INstalled this on your system).
+ - We have used CentOS 7.9 with x86_64 arch and build the OS, Also we have mounted the same ISO on your system (For the purpose - package management).
+ - We have used GNOME (GUI interface) and bash (CLI Interface).
+ 
+ - Hypervisor used here is - "Oracle Virtual Box" and it allow to add additional hardwares (Network Interface Card "NIC", hard disk, Increase RAM/CPU etc - Complate management of your Virtual machine can be easily done. 
+ 
+##
+ - Basic Linux commands and FOSS (Free OpenSource Software).
+ - OpenSource - Source code and software must be available for all.
+ - Basic command concepts:-
+   # command option argument 
+   Command - It is a utility, which can be used to perform some actions/events.
+   OPtion - Option is/are required for modify the behavious/function of the command.
+   Argument(s) - This is/are data which is required to execute the command.
+   
+##
+2. Editor understanding (vim).
+vim file_name
+press "i" key - insert mode 
+
+Type your 1st line.
+Type your 2nd line.
+Type your 3rd line.
+Continue as per your task.
+
+press "esc" key - Lock mode.
+
+press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
+
+   w - write 
+   q - quit
+   - - nothong 
+   
+   
+  # vimtutor
+  Not: vimtutor is an application which gives you option to edit/update/create-new-file/delete the file's lines.
+  - vimtutor (If you want to come out from "vimtutor" then same way need to come out as file).
+     Press :wq
+	 here not saving anything so :q 
+	 Search part - press /"search_string" then enter.
+	 Press "n" for next search and continu
+	 Press "N" privious search and continu.
+	 Press "g" to come to top line.
+	 press "G" to go the the last line.
+	 
+	 
+	 # Command option argument 
+      - command having manual pages.
+	    man 1 basic_command (basic_command - /bin or /usr/bin).
+		Eg:
+		man 1 mkdir 
+		
+		
+		man 8 admin_related_command (sbin_command - /sbin or /usr/sbin).
+		Eg:
+		man 8 useradd 
+		
+	    man 5 file_name 
+		Eg:
+		man 5 passwd  (/etc/passwd).
+		Eg: 
+		 man 5 passwd or man 5 shadow 
+		
+	 Search part - press /"search_string" then enter.
+	 Press "n" for next search and continu
+	 Press "N" privious search and continu.
+	 Press "g" to come to top line.
+	 press "G" to go the the last line.
+	 
+
+    
+ - User & Group management:-
+   
+  #Users:-
+   Create user - useradd 
+   Delete user - userdel 
+   Modify user - usermod
+   
+   useradd <user_name> 
+   Eg:
+   useradd john 
+   useradd tom 
+   
+  
+  #Groups:-
+   Create group - groupadd 
+   Delete group - groupdel 
+   modify group - groupmod   
+   
+  #groupadd <group_name>
+	Eg:
+	  groupadd unix_team
+ 
+  #passwd (Set password for users).
+   passwd <user_name>(as root user).
+   passwd john 
+   Type:
+   retype:    
+   
+   group = unix_team
+   useradd -g <primary_group_name> <user_name>
+   Eg:
+     useradd -g unix_team john  (unix_team is a primary group of john)
+	 usermod -G unix_team tom   (unix_team is a secoundry group of yom).
+	 
+	 
+	 ###########
+	 1) groupadd 
+	 2) groupdel
+	 3) groupmod 
+	 4) useradd 
+	 5) usermod 
+	 6) userdel 
+	 7) passwd (echo "password@123"  | passwd --stdin user_name )
+	    Example echo "password@123"  | passwd --stdin john
+     8) chmod 
+	 9) chown 
+	 files:-
+	 /etc/passwd     (man 5 passwd)
+	 /etc/group      (man 5 group)
+	 /etc/shadow     (man 5 shadow)
+	 /etc/login.def  (man 5 login.def)
+	 
+	 ###########
+	 Recap-Lab-01:-
+	 
+	 1) Group creation:-
+         unix_grp with GID=4067
+         middleware_grp with GID=4167
+		 dba_grp with GID=4267
+		 wintel_grp with GID=4367 
+		 app1_grp with GID=4467
+
+		 
+	 2) user_name1/25  (25 user need to be created as per request, below all user's group as primary).
+	    - user_name1 to user_name5 - unix_grp , UID=12345  ,comment=" Unix Team" 
+	    - user_name6 to user_name10 - middleware_grp   , UID=11345 , command ="middleware User"
+	    - user_name11 to user_name15 - wintel_grp  , UID=11445, command ="Wintel User"
+	    - user_name16 to user_name10 - appl_grp , UID=11545, comment ="app1 User"
+		
+	 3) Below directory structure.
+	 
+	   /PROJETC_ORG
+	       UNIX      grp_owner= unix_grp  (like this.)
+		   MIDDLEWARE
+		   WINTEL 
+		   DBA 
+		   APP1
+		   
+	 4) Set the permission and ownership/group-ownership 
+		   chmod 770 - all the directory  
+		   chown root:unix_grp  UNIX
+     5) Create "project_grp" group and add all 25 users.
+        Set the permission on project dir and it's sub directories "/Project" - (chmod 770 
+		
+		
