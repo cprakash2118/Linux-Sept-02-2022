@@ -254,3 +254,4 @@ echo redhat | passwd --stdin user_name4
 echo redhat | passwd --stdin user_name5
 
 
+PLease continue for next 25 user from 6 onwards.
