@@ -398,6 +398,7 @@ LABs-03 Lab-01-Recap-phase02/3/4/5
 	# lvextend -l +(No_OF_PE)  /dev/vg_disk_03_sdc/lv_disk_03_sdc
 	# resize2fs  /dev/vg_disk_03_sdc/lv_disk_03_sdc
    - Verify the output and confirmthe same.
-	 
+ ===============================================================================================
 
-   
+LABs-02 Lab-01-Recap-phase02/3/4/5
+  
