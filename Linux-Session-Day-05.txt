@@ -205,10 +205,11 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
 
 		 
 	 2) user_name1/25  (25 user need to be created as per request, below all user's group as primary).
-	    - user_name1 to user_name5 - unix_grp , UID=12345  ,comment=" Unix Team" 
-	    - user_name6 to user_name10 - middleware_grp   , UID=11345 , command ="middleware User"
-	    - user_name11 to user_name15 - wintel_grp  , UID=11445, command ="Wintel User"
-	    - user_name16 to user_name10 - appl_grp , UID=11545, comment ="app1 User"
+	    - user_name1 to user_name5 - unix_grp , UID=12345/6/7/8/9  ,comment=" Unix Team" (user_name2 = 12346)
+	    - user_name6 to user_name10 - dba_grp ,  UID=11345/6/7/8/9 , comment="  DBA Team"
+	    - user_name11 to user_name15 - middleware_grp   , UID=12345/6/7/8/9, command ="middleware User"
+	    - user_name16 to user_name20 - wintel_grp  , UID=12445/6/7/8/9, command ="Wintel User"
+		- user_name21 to user_name25 - appl_grp , UID=13545/6/7/8/9, comment ="app1 User"
 		
 	 3) Below directory structure.
 	 
@@ -226,6 +227,9 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
         Set the permission on project dir and it's sub directories "/Project" - (chmod 770 
 		
 ============== SOlution
+Lab-01-Recap
+
+####
 man groupadd
 groupadd -g 4067 unix_grp
 groupadd -g 4167 middleware_grp
@@ -235,3 +239,4 @@ groupadd -g 4467 app1_grp
 
 Veirfy
 cat /etc/group | grep _grp
+
