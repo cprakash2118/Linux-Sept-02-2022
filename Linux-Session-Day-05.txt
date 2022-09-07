@@ -205,7 +205,7 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
 
 		 
 	 2) user_name1/25  (25 user need to be created as per request, below all user's group as primary).
-	    - user_name1 to user_name5 - unix_grp , UID=12345/6/7/8/9  ,comment=" Unix Team" (user_name2 = 12346)
+	    - user_name1 to user_name5 - unix_grp , UID=12345/6/7/8/9  ,comment="Unix Team" (user_name2 = 12346)
 	    - user_name6 to user_name10 - dba_grp ,  UID=11345/6/7/8/9 , comment="  DBA Team"
 	    - user_name11 to user_name15 - middleware_grp   , UID=13345/6/7/8/9, command ="middleware User"
 	    - user_name16 to user_name20 - wintel_grp  , UID=12445/6/7/8/9, command ="Wintel User"
@@ -239,4 +239,18 @@ groupadd -g 4467 app1_grp
 
 Veirfy
 cat /etc/group | grep _grp
+
+
+useradd -u 12345 -c "Unix Team" -g unix_grp user_name1
+useradd -u 12346 -c "Unix Team" -g unix_grp user_name2
+useradd -u 12347 -c "Unix Team" -g unix_grp user_name3
+useradd -u 12348 -c "Unix Team" -g unix_grp user_name4
+useradd -u 12349 -c "Unix Team" -g unix_grp user_name5 
+
+echo redhat | passwd --stdin user_name1
+echo redhat | passwd --stdin user_name2
+echo redhat | passwd --stdin user_name3
+echo redhat | passwd --stdin user_name4
+echo redhat | passwd --stdin user_name5
+
 
