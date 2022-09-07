@@ -227,10 +227,10 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
         Set the permission on project dir and it's sub directories "/Project" - (chmod 770 
 		
 ============== SOlution
-Lab-01-Recap
+Lab-01-Recap-phase01
 
 ####
-*** phase-01 
+*** point-01 
 
 man groupadd
 groupadd -g 4067 unix_grp
@@ -242,7 +242,7 @@ groupadd -g 4467 app1_grp
 Veirfy
 cat /etc/group | grep _grp
 
-***Phase-02
+***Point-02
 useradd -u 12345 -c "Unix Team" -g unix_grp user_name1
 useradd -u 12346 -c "Unix Team" -g unix_grp user_name2
 useradd -u 12347 -c "Unix Team" -g unix_grp user_name3
@@ -259,7 +259,7 @@ echo redhat | passwd --stdin user_name5
 PLease continue for next 25 user from 6 onwards.
 
 
-***Phase-03
+***Point-03
 
 mkdir -p /Project_ORG/{UNIX,MIDDLEWARE,DBA,WINTEL,APP1}
 chmod -R 770 /Project_ORG/
@@ -304,7 +304,7 @@ Phase-05:-
 16. STDOUT
 17. STDINT
 18. Essential System Administration Tools 
-=======================
+=======================########################====================================
 Below points we have done (Pending topics we will be doing it).
 1st we will do below concept's lab and will move to pending topics.
 
@@ -319,4 +319,7 @@ Below points we have done (Pending topics we will be doing it).
 16. STDOUT
 17. STDINT
 18. Essential System Administration Tools   (We will do Recap on this).
+
+==== LABs-02 Lab-01-Recap-phase02/3/4/5  (Topics/Concepts which we have covered).
+
    
