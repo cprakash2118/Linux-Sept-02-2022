@@ -320,6 +320,62 @@ Below points we have done (Pending topics we will be doing it).
 17. STDINT
 18. Essential System Administration Tools   (We will do Recap on this).
 
-==== LABs-02 Lab-01-Recap-phase02/3/4/5  (Topics/Concepts which we have covered).
+##################==== LABs-02 Lab-01-Recap-phase02/3/4/5  (Topics/Concepts which we have covered).
 
+LABs-02 Lab-01-Recap-phase02/3/4/5
+####
+Instruction to be followed before performing the below lab's tasks.
+
+### Point-01
+- Shutdown/poweredOff  the current VMs (server-01).
+- Now build new VM with a name (server-02).
+- Make sure you should take care of BIOS setting so that your system again not go for same installation step (previous step).
+- Make sure you must attach ISO for package management.
+- Make sure you must be having "YUM" configued.
+- Make sure your system name must be defined.
+   hostnamectl set-hostname chandra-empID-server-02.example.com 
+   cat /etc/hostname 
+- Make sure you must setup the basic network for your putty configuration.
+- Make sure you must be access your server-02 from mputty.
+
+### Point-02 
+
+- Attached disk of 3 GB and create 4 primary partitions using parted command.
+- Each partition must be having apprx 500MB size.
+- 1st partition (/dev/sdb1) must be having ext3 file system and contain below data. 
+- 1st partition (/dev/sdb1) must be mounted on mentioned mount point (/mp_sdb1)
+- Create below directory structure and perform the operations.
+- Permanent mounting must be done (update in /etc/fstab)
+ 
+#####
+mkdir -p /mp_sdb1/Project_server02/{UNIX,MIDDLEWARE,DBA,WINTEL,APP1}
+chmod -R 770 /mp_sdb1/Project_server02
+chown root:project  /mp_sdb1/
+chown root:project  /mp_sdb1/Project_server02
+cd /mp_sdb1/Project_server02
+chmod 770 * 
+chown root:unix_grp UNIX 
+chown root:middleware_grp MIDDLEWARE
+chown root:dba_grp DBA 
+chown root:wintel_grp WINTEL 
+chown root:app1_grp APP1
+
+Verify the user access same as previous (This time directory changed).
+
+#####
+- 2nd partition (/dev/sdb2) must be having ext2 and mounted on /mp_sdb2.
+- Copy all data from /mp_sdb1 to /mp_sdb2
+- Permanent mounting must be done (update in /etc/fstab) 
+
+- 3rd partition (/dev/sdb3) must be having vfat and mounted on /mp_sdb3.
+- Copy all data from /mp_sdb1 to /mp_sdb3 
+- Permanent mounting must be done (update in /etc/fstab)
+
+- 4th partition (/dev/sdb4) must be swap. 
+- Permanent mounting must be done (update in /etc/fstab)
+
+
+=======================##############################################
+LABs-03 Lab-01-Recap-phase02/3/4/5
+####
    
