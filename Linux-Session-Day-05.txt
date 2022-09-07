@@ -223,7 +223,7 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
 	 4) Set the permission and ownership/group-ownership 
 		   chmod 770 - all the directory  
 		   chown root:unix_grp  UNIX
-     5) Create "project_grp" group and add all 25 users.
+     5) Create "project" group and add all 25 users.
         Set the permission on project dir and it's sub directories "/Project" - (chmod 770 
 		
 ============== SOlution
@@ -264,7 +264,7 @@ PLease continue for next 25 user from 6 onwards.
 mkdir -p /Project_ORG/{UNIX,MIDDLEWARE,DBA,WINTEL,APP1}
 chmod -R 770 /Project_ORG/
 chown root:project  /Project_ORG/
-cd /PROJETC_ORG
+cd /Project_ORG/
 chmod 770 * 
 chown root:unix_grp UNIX 
 chown root:middleware_grp MIDDLEWARE
@@ -272,3 +272,9 @@ chown root:dba_grp DBA
 chown root:wintel_grp WINTEL 
 chown root:app1_grp APP1
 
+=======
+cat /etc/group | grep project
+ls -ld /Project_ORG/
+ls -l /Project_ORG/
+for x in {1..5}; do id user_name$x; done
+for x in {1..25}; do id user_name$x; done
