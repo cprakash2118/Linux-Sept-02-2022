@@ -322,7 +322,7 @@ Below points we have done (Pending topics we will be doing it).
 
 ##################==== LABs-02 Lab-01-Recap-phase02/3/4/5  (Topics/Concepts which we have covered).
 
-LABs-02 Lab-01-Recap-phase02/3/4/5
+LABs-02 Lab-01-Recap-phase02/3/4/5  (20-25 mins - MAX)
 ####
 Instruction to be followed before performing the below lab's tasks.
 
