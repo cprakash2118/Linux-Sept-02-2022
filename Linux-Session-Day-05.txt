@@ -398,7 +398,147 @@ LABs-03 Lab-01-Recap-phase02/3/4/5
 	# lvextend -l +(No_OF_PE)  /dev/vg_disk_03_sdc/lv_disk_03_sdc
 	# resize2fs  /dev/vg_disk_03_sdc/lv_disk_03_sdc
    - Verify the output and confirmthe same.
- ===============================================================================================
 
-LABs-02 Lab-01-Recap-phase02/3/4/5
+##########
+ Solution LABs-03 Lab-01-Recap-phase02/3/4/5
+##########  
+   
+   
+ ===============================================================================================
+##########
+SOlution LABs-02 Lab-01-Recap-phase02/3/4/5
+##########
+### Point-01
+- Shutdown/poweredOff  the current VMs (server-01) - Done 
+- Now build new VM with a name (server-02) - Done 
+- Make sure you should take care of BIOS setting so that your system again not go for same installation step (previous step).
+- Make sure you must attach ISO for package management.
+- Make sure you must be having "YUM" configued.
+- Make sure your system name must be defined.
+   hostnamectl set-hostname chandra-empID-server-02.example.com 
+   cat /etc/hostname 
+- Make sure you must setup the basic network for your putty configuration.
+- Make sure you must be access your server-02 from mputty.
+
+
+################################################
+
+[root@chandra-empid-server-02 ~]# history
+    1  hostnamectl set-hostname chandra-empID-server-02.example.com
+    2  exit
+    3  fdisk -l | grep "Disk /dev/sd"
+    4  parted /dev/sdb mklabel msdos
+    5  parted /dev/sdb mkpart primary ext3 2048s 500MB
+    6  parted /dev/sdb mkpart primary ext2 501MB 1001MB
+    7  parted /dev/sdb mkpart primary vfat 1002MB 1502MB
+    8  parted /dev/sdb mkpart primary ext2 1002MB 1502MB
+    9  parted /dev/vdb mkpart primary swap 1503MB 2003MB
+   10  parted /dev/sdb mkpart primary swap 1503MB 2003MB
+   11  parted /dev/sdb mkpart primary ext4 1503MB 2003MB
+   12  udevadm settle
+   13  parted list
+   14  parted print
+   15  parted -l
+   16  parted -l | grep "/dev/sdb"
+   17  parted -l | less
+   18  parted -l /dev/sdb
+   19  parted print  /dev/sdb
+   20  parted  /dev/sdb
+   21  mkfs.ext3 /dev/sdb1
+   22  mkfs.ext2 /dev/sdb2
+   23  mkfs.vfat /dev/sdb3
+   24  mkswap /dev/sdb4
+   25  mkdir /mp_sdb1
+   26  mkdir /mp_sdb2
+   27  mkdir /mp_sdb3
+   28  blkid
+   29  vim /etc/fstab
+   30  blkid /dev/sdb1
+   31  blkid /dev/sdb1 >> /etc/fstab
+   32  blkid /dev/sdb2 >> /etc/fstab
+   33  vim /etc/fstab
+   34  cat /etc/fstab
+   35  mkdir /mpsd{1..3}
+   36  swapon -s
+   37  swapon -a
+   38  swapon -s
+   39  mount -a
+   40  vim /etc/fstab
+   41  mount -a
+   42  df -THP
+   43  swapon -a
+   44  swapon -s
+   45  mount -a
+   46  mkdir -p /mp_sdb1/Project_server02/{UNIX,MIDDLEWARE,DBA,WINTEL,APP1}
+   47  chmod -R 770 /mp_sdb1/Project_server02
+   48  reboot
+   49  df -THP
+   50  cd /run/media/root/CentOS\ 7\ x86_64/
+   51  ls
+   52  cd
+   53  cd /etc/yum.repos.d/
+   54  vim mrepo.repo
+   55  yum install tree
+   56  yum clean all
+   57  yum repolist
+   58  ll
+   59  mkdir /root/bkp-repo
+   60  mv CentOS-* /root/bkp-repo/
+   61  ll
+   62  yum clean all
+   63  yum repolist
+   64  yum install tree -y
+   65  tree
+   66  cd
+   67  cat /etc/redhat-release
+   68  cat /etc/hostname
+   69  fdisk -l | grep "Disk /dev/sd"
+   70  df -THP
+   71  df -THP | grep mp
+   72  df -THP | grep /mp
+   73  free -m
+   74  swapon -s
+   75  swapon -a
+   76  swapon -s
+   77  lsblk
+   78  mkswap /dev/sdb4
+   79  blkid /dev/sdb4
+   80  vim /etc/fstab
+   81  mount -a
+   82  swapon -s
+   83  swapon -a
+   84  swapon -s
+   85  free -m
+   86  lsblk
+   87  reboot
+   88  history
+[root@chandra-empid-server-02 ~]#
+[root@chandra-empid-server-02 ~]#
+[root@chandra-empid-server-02 ~]#
+[root@chandra-empid-server-02 ~]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Wed Sep  7 15:41:57 2022
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=87c06dbf-5c5b-41bb-ace6-7365ece0afcd /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+UUID="df240cee-e7a1-45a7-babf-9a4e076ead97" swap swap defaults 0 0
+UUID="BA1E-8C82"   /mp_sdb3    vfat defaults 0 0
+UUID="dc5cb27c-38bc-4d4f-89f4-280b850885d1"   /mp_sdb2    ext2 defaults 0 0
+UUID="9dc24a4d-f4a6-4fdd-b5f5-eae2eb40ed24"   /mp_sdb1    ext3 defaults 0 0
+[root@chandra-empid-server-02 ~]#
+
+
+
+
+########################################## SOlutions end here LAB-02 ####################
+
+##########
+ Solution LABs-03 Lab-01-Recap-phase02/3/4/5
+##########  
   
