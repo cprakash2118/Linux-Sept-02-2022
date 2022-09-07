@@ -230,6 +230,8 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
 Lab-01-Recap
 
 ####
+*** phase-01 
+
 man groupadd
 groupadd -g 4067 unix_grp
 groupadd -g 4167 middleware_grp
@@ -240,7 +242,7 @@ groupadd -g 4467 app1_grp
 Veirfy
 cat /etc/group | grep _grp
 
-
+***Phase-02
 useradd -u 12345 -c "Unix Team" -g unix_grp user_name1
 useradd -u 12346 -c "Unix Team" -g unix_grp user_name2
 useradd -u 12347 -c "Unix Team" -g unix_grp user_name3
@@ -255,3 +257,18 @@ echo redhat | passwd --stdin user_name5
 
 
 PLease continue for next 25 user from 6 onwards.
+
+
+***Phase-03
+
+mkdir -p /Project_ORG/{UNIX,MIDDLEWARE,DBA,WINTEL,APP1}
+chmod -R 770 /Project_ORG/
+chown root:project  /Project_ORG/
+cd /PROJETC_ORG
+chmod 770 * 
+chown root:unix_grp UNIX 
+chown root:middleware_grp MIDDLEWARE
+chown root:dba_grp DBA 
+chown root:wintel_grp WINTEL 
+chown root:app1_grp APP1
+
