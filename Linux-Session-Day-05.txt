@@ -225,4 +225,13 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
      5) Create "project_grp" group and add all 25 users.
         Set the permission on project dir and it's sub directories "/Project" - (chmod 770 
 		
-		
+============== SOlution
+man groupadd
+groupadd -g 4067 unix_grp
+groupadd -g 4167 middleware_grp
+groupadd -g 4267 dba_grp
+groupadd -g 4367 wintel_grp
+groupadd -g 4467 app1_grp
+
+Veirfy
+cat /etc/group | grep _grp
