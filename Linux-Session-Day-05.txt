@@ -207,7 +207,7 @@ press ":wq" or ":wq!" or ":q" or ":q!" or ":w"
 	 2) user_name1/25  (25 user need to be created as per request, below all user's group as primary).
 	    - user_name1 to user_name5 - unix_grp , UID=12345/6/7/8/9  ,comment=" Unix Team" (user_name2 = 12346)
 	    - user_name6 to user_name10 - dba_grp ,  UID=11345/6/7/8/9 , comment="  DBA Team"
-	    - user_name11 to user_name15 - middleware_grp   , UID=12345/6/7/8/9, command ="middleware User"
+	    - user_name11 to user_name15 - middleware_grp   , UID=13345/6/7/8/9, command ="middleware User"
 	    - user_name16 to user_name20 - wintel_grp  , UID=12445/6/7/8/9, command ="Wintel User"
 		- user_name21 to user_name25 - appl_grp , UID=13545/6/7/8/9, comment ="app1 User"
 		
