@@ -278,3 +278,45 @@ ls -ld /Project_ORG/
 ls -l /Project_ORG/
 for x in {1..5}; do id user_name$x; done
 for x in {1..25}; do id user_name$x; done
+
+######################################################################################################
+##
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+##
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+##
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+##
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+=======================
+Below points we have done (Pending topics we will be doing it).
+1st we will do below concept's lab and will move to pending topics.
+
+
+5. Installation of Linux OS (Enterprise Server OS).
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+12. Package management uging "yum" and "rpm".
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools   (We will do Recap on this).
+   
