@@ -140,8 +140,48 @@ until [ $count_until -lt 1 ]; do echo $count_until; count_until=$[$count_until -
 # cat /etc/passwd | awk -F":" '{print $1}'
 
 
+For shell script reference.
+https://github.com/cprakash2118/QCS-Shell-Scripting-Basic-to-Advance
 
 
+
+
+=============
+
+[root@chandra-empid-server-02 work]# vim data01.sh
+[root@chandra-empid-server-02 work]# chmod 755 data01.sh
+[root@chandra-empid-server-02 work]# ./data01.sh
+[root@chandra-empid-server-02 work]# ./data01.sh
+Service status - rsyslog                         [ OK ]
+Service status - sshd                            [ OK ]
+Service status - libvirtd                        [ OK ]
+Service status - named                           [ Failed ]
+Service status - haproxy                         [ Failed ]
+Service status - httpd                           [ Failed ]
+[root@chandra-empid-server-02 work]# vim data01.sh
+[root@chandra-empid-server-02 work]# cat data01.sh
+#!/bin/bash
+RED='\033[0;31m'
+URED='\033[4;31m'
+BRED='\033[1;31m'
+GREEN='\033[0;32m'
+BGREEN='\033[1;32m'
+UGREEN='\033[4;32m'
+NC='\033[0m'
+for service_name in rsyslog sshd libvirtd named haproxy httpd
+do
+ systemctl status ${service_name} &> /dev/null
+ check_service_status=$?
+ if [ ${check_service_status} -eq 0 ]
+  then
+    #echo -e "Service status - ${service_name}    \t\t\t ${GREEN}[ OK ]${NC}"
+    printf "Service status - ${service_name}   \t\t\t ${BGREEN}[ OK ]${NC} \n"
+  else
+    #echo -e "Service status - ${service_name}  \t\t\t ${BRED}[ Failed ]${NC} \n"
+    printf "Service status - ${service_name}  \t\t\t ${BRED}[ Failed ]${NC} \n"
+ fi
+done
+[root@chandra-empid-server-02 work]#
 
 
 
