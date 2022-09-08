@@ -840,5 +840,90 @@ LABs-03 Lab-01-Recap-phase02/3/4/5
 	# lvextend -l +(No_OF_PE)  /dev/vg_disk_03_sdc/lv_disk_03_sdc
 	# resize2fs  /dev/vg_disk_03_sdc/lv_disk_03_sdc
    - Verify the output and confirmthe same.
+   
+############################################## COmmand used here 
+   fdisk -l | grep "Disk /dev/sd"
+parted /dev/sdb mklabel msdos
+parted /dev/sdb mkpart primary ext3 2048s 500MB
+parted /dev/sdb mkpart primary ext2 501MB 1001MB
+parted /dev/sdb mkpart primary vfat 1002MB 1502MB
+parted /dev/sdb mkpart primary ext2 1002MB 1502MB
+parted /dev/vdb mkpart primary swap 1503MB 2003MB
+parted /dev/sdb mkpart primary swap 1503MB 2003MB
+parted /dev/sdb mkpart primary ext4 1503MB 2003MB
+udevadm settle
+parted list
+parted print
+parted -l
+parted -l | grep "/dev/sdb"
+parted -l | less
+parted -l /dev/sdb
+parted print  /dev/sdb
+parted  /dev/sdb
+fdisk -l | grep "Disk /dev/sd"
+fdisk -l |grep "Disk /dev/sd"
+parted -l |less
+parted /dev/sdc mklabel msdos
+parted /dev/sdc mkpart primary ext4 2048s 501MB
+parted -l |less
+parted /dev/sdc mkpart primary ext4 502MB 1002MB
+parted -l |less
+parted /dev/sdc mkpart primary ext4 1003MB 1503MB
+parted -l |less
+parted /dev/sdc
+parted /dev/sdc mkpart primary ext4 1003MB 1504MB
+parted /dev/sdc
+parted /dev/sdc mkpart primary ext4 1505MB 2006MB
+parted /dev/sdc
+parted /dev/sdc mkpart primary ext4 1505MB 2005MB
+parted /dev/sdc
+udevadm settle
+#pvcreate /dev/sdc{1..4}
+#pvcreate /dev/sdc1 /dev/sdc2 /dev/sdc3 /dev/sdc4
+#pvcreate /dev/sdc1
+#pvcreate /dev/sdc2
+pvcreate /dev/sdc{1..4}
+pvscan
+pvs
+pvdisplay /dev/sdc1
+vgcreate -s 32M vg_disk_03_sdc /dev/sdc{1..2}
+vgscan
+vgs
+vgdisplay vg_disk_03_sdc
+pvdisplay /dev/sdc1
+vgdisplay vg_disk_03_sdc
+lvcreate -l +10 -n lv_disk_03_sdc vg_disk_03_sdc
+lvscan
+lvs
+lvdisplay lv_disk_03_sdc
+lvdisplay /dev/vg_disk_03_sdc/lv_disk_03_sdc
+blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+mkfs.ext4  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+mkdir /lvm_mp1
+blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+lvdisplay lv_disk_03_sdc
+lvdisplay  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+lvextend -l +2 /dev/vg_disk_03_sdc/lv_disk_03_sdc
+lvdisplay  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+resize2fs /dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc
+   ##################################################################################
+   
+   
+  ===============================================
+  ##
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+===========================================================
+##
+Phase-06:- 
+19. Networking Services 
+20. Network CLients.
+21. Network COnfiguration.
+22. Network file sharing services (FTP/NFS/Samaba etc).
 
 
