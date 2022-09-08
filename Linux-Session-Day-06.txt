@@ -1,0 +1,101 @@
+######################################################################################################
+
+Table of Contents:-
+
+##
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+##
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+##
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+
+##
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+##
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+=======================########################====================================
+Below points we have done (Pending topics we will be doing it).
+1st we will do below concept's lab and will move to pending topics.
+
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+5. Installation of Linux OS (Enterprise Server OS).
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+12. Package management uging "yum" and "rpm".
+
+########## As per below points/concepts - lab-04 ##########
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools   (We will do Recap on this).
+   
+
+#########Concepts ########## 
+Essential System Administration Tools:-
+ 
+ - Define variables 
+   x=10 
+   x=10.12
+   x=a
+   x=A
+   x="Linux"
+   x="Welcome to Linux"
+
+[root@chandra-empid-server-02 work]# cat /usr/local/bin/server_info.sh
+#!/bin/bash
+server_name=$(uname -n)
+current_kernel_version=$(uname -r)
+current_date=$(date +%F,%H:%M)
+active_yum_repo_id=$(yum repolist | grep -A 1 "repo id" | grep -v "repo id" | awk -F" " '{print $1}')
+nic_name=$(ifconfig |grep flags |grep -vE 'lo|virbr0' | awk -F":" '{print $1}')
+ip_add=$(ifconfig $nic_name | grep inet | grep -v inet6 | awk -F" " '{print $2}')
+
+clear
+echo -e "######################\t Server Infomration \t######################"
+echo -e "Server Name\t : \t ${server_name}"
+echo -e "CUrrent date\t : \t ${current_date}"
+echo -e "Kernel Version\t : \t ${current_kernel_version}"
+echo -e "Active repo\t : \t ${active_yum_repo_id}"
+echo -e "Active NIC name\t : \t ${nic_name}"
+echo -e "Active IP address : \t ${ip_add}"
+
+[root@chandra-empid-server-02 work]#
+
+
+
+chmod 755 /usr/local/bin/server_info.sh
+
+
+Then execute this.
+
+
+
+
+
+
+
