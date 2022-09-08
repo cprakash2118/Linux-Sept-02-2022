@@ -93,6 +93,52 @@ chmod 755 /usr/local/bin/server_info.sh
 
 Then execute this.
 
+====================
+
+for x in {1..10}; do echo $x; done
+
+or
+
+for x in {1..10}
+#do echo "$x
+do
+echo "$x
+echo "Next line"
+done 
+
+Note: When move to new line use ";" 
+Eg:
+for x in {1..10}; do echo $x ; echo "Next line" ; done 
+
+-----
+count=1
+while [ $count -le 10 ]; do echo $count ; count=$[$count + 1]; done
+
+------
+count_until=1
+until [ $count_until -lt 10 ]; do echo $count_until; count_until=$[$count_until + 1]; done
+--------
+
+for x in {10..1}; do echo $x; done
+-----
+count=10
+while [ $count -gt 0 ]; do echo $count ; count=$[$count - 1]; done
+
+------
+count_until=10
+until [ $count_until -lt 1 ]; do echo $count_until; count_until=$[$count_until - 1]; done
+
+
+===========
+# date >  file_name   (overwrite)
+# date >> file_name   (Append)
+
+# dateee 2> file_name or dateee 2> /dev/null 
+
+# date 2&> file_name 
+
+# cat /etc/passwd | awk -F":" '{print $1}'
+
 
 
 
