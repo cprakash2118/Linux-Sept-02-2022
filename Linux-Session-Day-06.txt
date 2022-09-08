@@ -302,6 +302,21 @@ LAB-05
   firewalld-cmd --reload 
  
  Access your webpage using your web browser (Access via IP address only -
+ 
+ 
+ =================
+ <VirtualHost *:80>
+    ServerName server-02.example.com
+    ErrorLog logs/servera-error.log
+    CustomLog logs/servera-common.log common
+    DocumentRoot /var/www/vhosts/servera/
+  <Directory /var/www/vhosts/servera/>
+    Options +Indexes +FollowSymlinks +Includes
+    Order allow,deny
+    Allow from all
+   </Directory>
+</VirtualHost>
+=========================
    
    
    
