@@ -225,5 +225,11 @@ fi
 [root@chandra-empid-server-02 work]# ./useraddition.sh user_list.txt
 [root@chandra-empid-server-02 work]#
 
+=============
+LAB-05
+- Create users (user301 to user400) using interface (useraddition.sh)
+- user's password is redhat 
+- User name list must be from file (file name is - users_list.txt 
 
+- Delete all users which we have created using interface (userdelete.sh)
 
