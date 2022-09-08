@@ -185,7 +185,7 @@ done
 
 
 ===========================
-[root@chandra-empid-server-02 work]# #for x in {100..200}; do echo USER$x >> user_list.txt; done
+[root@chandra-empid-server-02 work]# for x in {100..200}; do echo USER$x >> user_list.txt; done
 [root@chandra-empid-server-02 work]# cat useraddition.sh
 #!/bin/bash
 file_name=$1
@@ -221,8 +221,8 @@ fi
 [root@chandra-empid-server-02 work]#
 [root@chandra-empid-server-02 work]# chmod 755 useraddition.sh
 [root@chandra-empid-server-02 work]# chmod 755 userdelete.sh
-[root@chandra-empid-server-02 work]# #./useraddition.sh user_list.txt
-[root@chandra-empid-server-02 work]# #./useraddition.sh user_list.txt
+[root@chandra-empid-server-02 work]# ./useraddition.sh user_list.txt
+[root@chandra-empid-server-02 work]# ./useraddition.sh user_list.txt
 [root@chandra-empid-server-02 work]#
 
 
