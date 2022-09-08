@@ -541,4 +541,304 @@ UUID="9dc24a4d-f4a6-4fdd-b5f5-eae2eb40ed24"   /mp_sdb1    ext3 defaults 0 0
 ##########
  Solution LABs-03 Lab-01-Recap-phase02/3/4/5
 ##########  
-  
+
+- Attached disk of 4 GB and create 4 primary partitions using parted command.
+- Each partition must be having exactly 500MB size.
+
+Attached 4 GB of disk and verify it once server up.
+
+# fdisk -l |grep "Disk /dev/sd"
+
+Example:-
+-------------------
+[root@chandra-empid-server-02 ~]# fdisk -l |grep "Disk /dev/sd"
+Disk /dev/sda: 26.8 GB, 26843545600 bytes, 52428800 sectors
+Disk /dev/sdb: 3221 MB, 3221225472 bytes, 6291456 sectors
+Disk /dev/sdc: 4294 MB, 4294967296 bytes, 8388608 sectors
+[root@chandra-empid-server-02 ~]# df -THP | grep "/dev/sdb"
+/dev/sdb3               vfat      499M     0  499M   0% /mp_sdb3
+/dev/sdb2               ext2      485M  2.4M  457M   1% /mp_sdb2
+/dev/sdb1               ext3      475M  2.5M  448M   1% /mp_sdb1
+[root@chandra-empid-server-02 ~]# swapon -s
+Filename                                Type            Size    Used    Priority
+/dev/sdb4                               partition       488444  0       -2
+/dev/dm-1                               partition       2621436 0       -3
+[root@chandra-empid-server-02 ~]#
+
+-------------------
+
+fdisk -l | grep "Disk /dev/sd"
+parted /dev/sdc mklabel msdos
+parted /dev/sdc mkpart primary ext4 2048s 501MB
+parted /dev/sdc mkpart primary ext4 502MB 1002MB
+parted /dev/sdc mkpart primary ext4 1003MB 1503MB
+parted /dev/sdc mkpart primary ext4 1505MB 2006MB
+udevadm settle
+parted list
+parted print
+
+-----------------------------
+Example:-
+
+[root@chandra-empid-server-02 ~]# parted /dev/sdc
+GNU Parted 3.1
+Using /dev/sdc
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) print
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdc: 4295MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size   Type     File system  Flags
+ 1      1049kB  501MB   500MB  primary
+ 2      502MB   1002MB  500MB  primary
+ 3      1003MB  1504MB  500MB  primary
+ 4      1505MB  2005MB  500MB  primary
+
+(parted) quit
+[root@chandra-empid-server-02 ~]#
+
+
+
+-----------------------------
+
+[root@chandra-empid-server-02 ~]# bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+32 * 28
+896
+^C
+(interrupt) Exiting bc.
+[root@chandra-empid-server-02 ~]# pvdisplay /dev/sdc1
+  --- Physical volume ---
+  PV Name               /dev/sdc1
+  VG Name               vg_disk_03_sdc
+  PV Size               477.00 MiB / not usable 29.00 MiB
+  Allocatable           yes
+  PE Size               32.00 MiB
+  Total PE              14
+  Free PE               14
+  Allocated PE          0
+  PV UUID               sfa5H0-wLOt-dWHj-Zm0m-rfOu-TZbS-kVpEOl
+
+[root@chandra-empid-server-02 ~]# vgdisplay vg_disk_03_sdc
+  --- Volume group ---
+  VG Name               vg_disk_03_sdc
+  System ID
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               896.00 MiB
+  PE Size               32.00 MiB
+  Total PE              28
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       28 / 896.00 MiB
+  VG UUID               qmtVXA-XgOm-yU1C-iPDH-Ky3R-eEK2-z8N8KV
+
+[root@chandra-empid-server-02 ~]# lvcreate -l +10 -n lv_disk_03_sdc vg_disk_03_sdc
+  Logical volume "lv_disk_03_sdc" created.
+[root@chandra-empid-server-02 ~]# lvscan
+  ACTIVE            '/dev/vg_disk_03_sdc/lv_disk_03_sdc' [320.00 MiB] inherit
+  ACTIVE            '/dev/centos/swap' [2.50 GiB] inherit
+  ACTIVE            '/dev/centos/root' [<21.50 GiB] inherit
+[root@chandra-empid-server-02 ~]# lvs
+  LV             VG             Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  root           centos         -wi-ao---- <21.50g
+  swap           centos         -wi-ao----   2.50g
+  lv_disk_03_sdc vg_disk_03_sdc -wi-a----- 320.00m
+[root@chandra-empid-server-02 ~]# lvdisplay lv_disk_03_sdc
+  Volume group "lv_disk_03_sdc" not found
+  Cannot process volume group lv_disk_03_sdc
+[root@chandra-empid-server-02 ~]# lvdisplay /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  --- Logical volume ---
+  LV Path                /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  LV Name                lv_disk_03_sdc
+  VG Name                vg_disk_03_sdc
+  LV UUID                DJame7-MaGD-2fnL-uX1r-uzyh-rD9m-TrWp5Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-empid-server-02.example.com, 2022-09-08 09:50:04 +0530
+  LV Status              available
+  # open                 0
+  LV Size                320.00 MiB
+  Current LE             10
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-empid-server-02 ~]# blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+[root@chandra-empid-server-02 ~]# mkfs.ext4  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+81920 inodes, 327680 blocks
+16384 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=33947648
+40 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks:
+        8193, 24577, 40961, 57345, 73729, 204801, 221185
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@chandra-empid-server-02 ~]# blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+/dev/vg_disk_03_sdc/lv_disk_03_sdc: UUID="e80c31db-c4ed-4365-8e0b-710d612cd66e" TYPE="ext4"
+[root@chandra-empid-server-02 ~]# vim /etc/fstab
+[root@chandra-empid-server-02 ~]# mkdir /lvm_mp1^C
+[root@chandra-empid-server-02 ~]# mkdir /lvm_mp1
+[root@chandra-empid-server-02 ~]# mount -a
+[root@chandra-empid-server-02 ~]# df -THP
+Filesystem                                Type      Size  Used Avail Use% Mounted on
+devtmpfs                                  devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /dev/shm
+tmpfs                                     tmpfs     1.6G  9.7M  1.5G   1% /run
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /sys/fs/cgroup
+/dev/mapper/centos-root                   xfs        24G  4.2G   19G  19% /
+/dev/sdb3                                 vfat      499M     0  499M   0% /mp_sdb3
+/dev/sdb2                                 ext2      485M  2.4M  457M   1% /mp_sdb2
+/dev/sdb1                                 ext3      475M  2.5M  448M   1% /mp_sdb1
+/dev/sda1                                 xfs       1.1G  196M  868M  19% /boot
+tmpfs                                     tmpfs     301M   13k  301M   1% /run/user/42
+tmpfs                                     tmpfs     301M     0  301M   0% /run/user/0
+/dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc ext4      317M  2.2M  294M   1% /lvm_mp1
+[root@chandra-empid-server-02 ~]# blkid  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+/dev/vg_disk_03_sdc/lv_disk_03_sdc: UUID="e80c31db-c4ed-4365-8e0b-710d612cd66e" TYPE="ext4"
+[root@chandra-empid-server-02 ~]# lvdisplay lv_disk_03_sdc
+  Volume group "lv_disk_03_sdc" not found
+  Cannot process volume group lv_disk_03_sdc
+[root@chandra-empid-server-02 ~]# lvdisplay  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  --- Logical volume ---
+  LV Path                /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  LV Name                lv_disk_03_sdc
+  VG Name                vg_disk_03_sdc
+  LV UUID                DJame7-MaGD-2fnL-uX1r-uzyh-rD9m-TrWp5Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-empid-server-02.example.com, 2022-09-08 09:50:04 +0530
+  LV Status              available
+  # open                 1
+  LV Size                320.00 MiB
+  Current LE             10
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-empid-server-02 ~]# exptr 320 + 32
+bash: exptr: command not found...
+[root@chandra-empid-server-02 ~]# expt 320 + 32
+bash: expt: command not found...
+[root@chandra-empid-server-02 ~]# expr 320 + 32
+[root@chandra-empid-server-02 ~]# expr 320 + 32
+352
+[root@chandra-empid-server-02 ~]# lvextend -l +2 /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  Size of logical volume vg_disk_03_sdc/lv_disk_03_sdc changed from 320.00 MiB (10 extents) to 384.00 MiB (12 extents).
+  Logical volume vg_disk_03_sdc/lv_disk_03_sdc successfully resized.
+[root@chandra-empid-server-02 ~]# lvdisplay  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  --- Logical volume ---
+  LV Path                /dev/vg_disk_03_sdc/lv_disk_03_sdc
+  LV Name                lv_disk_03_sdc
+  VG Name                vg_disk_03_sdc
+  LV UUID                DJame7-MaGD-2fnL-uX1r-uzyh-rD9m-TrWp5Q
+  LV Write Access        read/write
+  LV Creation host, time chandra-empid-server-02.example.com, 2022-09-08 09:50:04 +0530
+  LV Status              available
+  # open                 1
+  LV Size                384.00 MiB
+  Current LE             12
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+
+[root@chandra-empid-server-02 ~]# df -THP
+Filesystem                                Type      Size  Used Avail Use% Mounted on
+devtmpfs                                  devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /dev/shm
+tmpfs                                     tmpfs     1.6G  9.7M  1.5G   1% /run
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /sys/fs/cgroup
+/dev/mapper/centos-root                   xfs        24G  4.2G   19G  19% /
+/dev/sdb3                                 vfat      499M     0  499M   0% /mp_sdb3
+/dev/sdb2                                 ext2      485M  2.4M  457M   1% /mp_sdb2
+/dev/sdb1                                 ext3      475M  2.5M  448M   1% /mp_sdb1
+/dev/sda1                                 xfs       1.1G  196M  868M  19% /boot
+tmpfs                                     tmpfs     301M   13k  301M   1% /run/user/42
+tmpfs                                     tmpfs     301M     0  301M   0% /run/user/0
+/dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc ext4      317M  2.2M  294M   1% /lvm_mp1
+[root@chandra-empid-server-02 ~]# resize2fs /dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc is mounted on /lvm_mp1; on-line resizing required
+old_desc_blocks = 3, new_desc_blocks = 3
+The filesystem on /dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc is now 393216 blocks long.
+
+[root@chandra-empid-server-02 ~]#
+[root@chandra-empid-server-02 ~]#
+[root@chandra-empid-server-02 ~]# df -THP
+Filesystem                                Type      Size  Used Avail Use% Mounted on
+devtmpfs                                  devtmpfs  1.5G     0  1.5G   0% /dev
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /dev/shm
+tmpfs                                     tmpfs     1.6G  9.7M  1.5G   1% /run
+tmpfs                                     tmpfs     1.6G     0  1.6G   0% /sys/fs/cgroup
+/dev/mapper/centos-root                   xfs        24G  4.2G   19G  19% /
+/dev/sdb3                                 vfat      499M     0  499M   0% /mp_sdb3
+/dev/sdb2                                 ext2      485M  2.4M  457M   1% /mp_sdb2
+/dev/sdb1                                 ext3      475M  2.5M  448M   1% /mp_sdb1
+/dev/sda1                                 xfs       1.1G  196M  868M  19% /boot
+tmpfs                                     tmpfs     301M   13k  301M   1% /run/user/42
+tmpfs                                     tmpfs     301M     0  301M   0% /run/user/0
+/dev/mapper/vg_disk_03_sdc-lv_disk_03_sdc ext4      382M  2.2M  356M   1% /lvm_mp1
+[root@chandra-empid-server-02 ~]#
+
+
+
+
+
+
+  =======================##############################################
+LABs-03 Lab-01-Recap-phase02/3/4/5
+####
+
+- Attached disk of 4 GB and create 4 primary partitions using parted command. - done 
+- Each partition must be having exactly 500MB size.  - Done 
+- Use all 4 primary partitions for Physical Volume (PV).   Done 
+
+- Use all these 4 PVs to create required VG (VOlume Group) with a name "vg_disk_03_sdc".
+- While creating mentioned VG (vg_disk_03_sdc) PE (Physical Extend) size must be 32MB.
+- Create LV (Logical VOlume) as per details mentioned below.
+   - LV name must be "lv_disk_03_sdc"
+   - size must be between 350Mb to 370Mb.
+     Verify size (lvdisplay /dev/vg_disk_03_sdc/lv_disk_03_sdc).
+   - LVM "lv_disk_03_sdc" must be mounted on "/lvm_mp1" with ext4 file system.
+     (Verify the output - df -THP).
+   - Now use dd command and utilized the LVM disk space 100%.
+     (Hint - dd if=/dev/zero of=/lvm_mp1/file1 bs=1M count=300)
+   - Check the disk space for "/lvm_mp1" mount point and if it's used 90% or more then extend the LVM (	 /dev/vg_disk_03_sdc/lv_disk_03_sdc) by 300MB more size.
+
+    (Hint below command)
+	# lvextend -l +(No_OF_PE)  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+	# resize2fs  /dev/vg_disk_03_sdc/lv_disk_03_sdc
+   - Verify the output and confirmthe same.
+
+
