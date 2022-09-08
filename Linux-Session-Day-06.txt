@@ -233,3 +233,81 @@ LAB-05
 
 - Delete all users which we have created using interface (userdelete.sh)
 
+===============================================
+ - Start both VMs (Virtual Machines).
+ - As we have already setup the environment to access the VMs (Virtual machine via putty or Mputty).
+ - Now open your "Mputty" and from server-02 to server-01 - check the connectivity 
+   ping -c 4 192.168.56.101
+   
+ - As of now we have take the IP address via DHCP.
+   What is IP address ?
+   
+ - Main configuration file 
+   /etc/sysconfig/network-scripts/ifcfg-<nic_device-name>
+   Example:-
+   /etc/sysconfig/network-scripts/ifcfg-enp0s3
+   
+   192.168.56.0/24  
+   
+   192.168.56.0     - Network Address (used by router - for routing purpose)
+   192.168.56.1     - 1st IP address (generally used as gateway).
+   192.168.56.2 
+   ......
+   ......
+   ......
+   192.168.56.254
+   192.168.56.255
+
+
+
+   192.168.57.0/24 
+   
+   192.168.57.0
+   192.168.57.1
+   .....
+   .....
+   .....
+   192.168.57.254
+   192.168.57.255 
+   
+ =============================
+ - COnfigure YUm 
+ - Install apache 
+ - Start and enable apache services.
+ - Do required configuration changes.
+ - restart or (stop and start) or reload the apache services (httpd).
+ - Enable firewalld to allow apache to serve the web services outside of the server.
+ - Make sure firewalld service must be running 
+ - add port "http" to the server.
+ 
+ ======================
+  # yum install htttpd -y 
+  # systemctl enable httpd 
+  # systemctl start httpd 
+  # UPdate php/python/JS/CSS etc codes to default document root of apache server.
+    Default DocumentRoot - /var/www/html/
+	
+  #  vim /var/www/html/index.php 
+  sjflksd
+  lkskjdf
+  ljjskdf
+  lksdjf
+  :wq
+  
+  # systemctl reload httpd 
+  
+  Now need to enable firewalld w.r.t apache service 
+  
+  firewall-cmd --permanent --add-service=http or firewall-cmd --permanent --add-port=80/tcp 
+  firewalld-cmd --reload 
+ 
+ Access your webpage using your web browser (Access via IP address only -
+   
+   
+   
+   
+   
+   
+   
+   
+   
