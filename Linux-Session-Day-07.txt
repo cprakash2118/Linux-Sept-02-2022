@@ -204,14 +204,14 @@ done
   #ps -aef | grep testing.sh 
 
 - from 3rd tab 
-   # for x in {1..1000}; do ps -eo pid,ppid,user,stat,nice,comm | head -1 ;  ps -eo pid,ppid,user,stat,nice,comm | grep testing | grep -v grep ; sleep 2; echo
+   # for x in {1..1000}; do ps -eo pid,ppid,user,stat,nice,comm | head -1 ;  ps -eo pid,ppid,user,stat,nice,comm | grep testing | grep -v grep ; sleep 2; echo "----------------------------------------------------------------------"; done
 
 - from 4th terminal 
    # renice -n -19 -p <PID>
    # renice -n -19 -p 6262
    
    
-- ONce all above task done, then again chancel task in "1st tab"
+- ONce all above task done, then again cancel task in "1st tab"
   # nice -n -15 ./testing.sh 
 
 And verify the same from all terminals.
