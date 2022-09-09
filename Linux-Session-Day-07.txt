@@ -216,3 +216,36 @@ done
 
 And verify the same from all terminals.
 
+================
+uptime explaination:-
+
+LAB-07
+###########
+# mkdir //home/labuser/bin
+
+# vim /home/stlabuser/bin/control
+
+#!/bin/bash
+while true; do
+ echo -n "$@ " >> ~/control_outfile
+ sleep 1
+done 
+
+chmod +x /home/stlabuser/bin/control
+
+ control technical 
+
+
+(on he other terminal)
+tail -f ~/control_outfile
+
+
+Later
+ control technical 
+
+Ctrl+z 
+
+$ bg 
+$ fg 
+
+========================================================
