@@ -1,0 +1,202 @@
+
+Table of Contents:-
+
+##
+Phase-01:-
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+##
+Phase-02:-
+5. Installation of Linux OS (Enterprise Server OS).
+6. Processes Management (When any program under execution become a process- Will discuss this)
+7. Booting sequence (Complate booting processes involved, How your Enterprise Linux OS starts and be ready for any appliactions deployment).
+
+##
+Phase-03:-
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+11. RAID Management.
+
+##
+Phase-04:-
+12. Package management uging "yum" and "rpm".
+13. Package management using Source.
+
+##
+Phase-05:-
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools 
+=======================########################====================================
+Below points we have done (Pending topics we will be doing it).
+1st we will do below concept's lab and will move to pending topics.
+
+1. Introduction to Enterprise Linux, and basic understanding/usages of Linux OS.
+2. Editor understanding (vim).
+3. User/Group management.
+4. Linux Permission model.
+5. Installation of Linux OS (Enterprise Server OS).
+8. File System/Disk management (Linux Partitions - MBR & GPT, Linux File Systems, Moutning etc).
+9. Logical Volume Manager (Linux Partition, PV, VG and lvm etc).
+10. Swap management.
+12. Package management uging "yum" and "rpm".
+
+########## As per below points/concepts - lab-04 ##########
+14. Standard I/O Pipes.
+15. STDIN 
+16. STDOUT
+17. STDINT
+18. Essential System Administration Tools   (We will do Recap on this).
+   
+=======================
+
+
+Processes Management:- 
+ What is process ?
+ - program under execution become process.
+ - Process associated with it's components.
+   PID, PPID, UID, GID, State of the prosess. etc 
+   
+   WHta is Fork?
+ 
+ DEFINITION OF A PROCESS
+A process is a running instance of a launched, executable program. A process consists of:
+• An address space of allocated memory
+• Security properties including ownership credentials and privileges
+• One or more execution threads of program code
+• Process state
+
+The environment of a process includes:
+• Local and global variables
+• A current scheduling context
+• Allocated system resources, such as file descriptors and network ports.
+
+
+An existing (parent) process duplicates its own address space (fork) to create a new (child)
+process structure. Every new process is assigned a unique process ID (PID) for tracking
+and security. The PID and the parent's process ID (PPID) are elements of the new process
+environment. Any process may create a child process. All processes are descendants of the first
+system process, systemd on a Red Hat Enterprise Linux 8 system).
+
+ ======================================
+ Through the fork routine, a child process inherits security identities, previous and current file
+descriptors, port and resource privileges, environment variables, and program code. A child
+process may then exec its own program code. Normally, a parent process sleeps while the child
+process runs, setting a request (wait) to be signaled when the child completes. Upon exit, the
+child process has already closed or discarded its resources and environment. The only remaining
+resource, called a zombie, is an entry in the process table. The parent, signaled awake when the
+child exited, cleans the process table of the child's entry, thus freeing the last resource of the child
+process. The parent process then continues with its own program code execution.
+
+=======================================
+DESCRIBING PROCESS STATES
+In a multitasking operating system, each CPU (or CPU core) can be working on one process at
+a single point in time. As a process runs, its immediate requirements for CPU time and resource
+allocation change. Processes are assigned a state, which changes as circumstances dictate.
+
+==========================
+PROCESS STATE CODES
+       Here are the different values that the s, stat and state output specifiers (header "STAT" or "S") will
+       display to describe the state of a process:
+
+               D    uninterruptible sleep (usually IO)
+               R    running or runnable (on run queue)
+               S    interruptible sleep (waiting for an event to complete)
+               T    stopped by job control signal
+               t    stopped by debugger during the tracing
+               W    paging (not valid since the 2.6.xx kernel)
+               X    dead (should never be seen)
+               Z    defunct ("zombie") process, terminated but not reaped by its parent
+
+       For BSD formats and when the stat keyword is used, additional characters may be displayed:
+
+               <    high-priority (not nice to other users)
+               N    low-priority (nice to other users)
+               L    has pages locked into memory (for real-time and custom IO)
+               s    is a session leader
+               l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+               +    is in the foreground process group
+
+====================
+# ps  -aef
+# ps -aef | grep bash 
+
+top 5 processes consuming high CPU on this server.
+ ps -eo pcpu,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pcpu,pid,ppid,user,stat,nice,comm | sort -nr | head -5
+ ps -eo pcpu,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pcpu,pid,ppid,user,stat,nice,comm | sort -nr | head -10
+ ps -eo pcpu,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pcpu,pid,ppid,user,stat,nice,comm | sort -nr | head -20
+ 
+
+
+ top 5 processes consuming high memoery on this server.
+ ps -eo pmem,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pmem,pid,ppid,user,stat,nice,comm | sort -nr | head -5
+ ps -eo pmem,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pmem,pid,ppid,user,stat,nice,comm | sort -nr | head -10
+ ps -eo pmem,pid,ppid,user,stat,nice,comm | head -1 ; ps -eo pmem,pid,ppid,user,stat,nice,comm | sort -nr | head -20
+
+
+
+kill -l 
+It will; show all the signals 
+
+kill
+kill -9  <PID_no>
+kill -15 <PID_no>
+
+
+===================
+Any process with priority 
+
+[root@server01 work]# nice -n -17 ./testing.sh
+
+[root@server01 work]# for x in {1..1000}; do ps -eo pid,ppid,user,stat,nice,comm | head -1 ;  ps -eo pid,ppid,user,stat,nice,comm | grep testing | grep -v grep ; sleep 2; echo "----------------------------------------------------------------------"; done
+  PID  PPID USER     STAT  NI COMMAND
+ 6209  2941 root     S<+  -20 testing.sh
+----------------------------------------------------------------------
+  PID  PPID USER     STAT  NI COMMAND
+ 6209  2941 root     S<+  -20 testing.sh
+----------------------------------------------------------------------
+  PID  PPID USER     STAT  NI COMMAND
+ 6209  2941 root     S<+  -20 testing.sh
+^C
+[root@server01 work]# for x in {1..1000}; do ps -eo pid,ppid,user,stat,nice,comm | head -1 ;  ps -eo pid,ppid,user,stat,nice,comm | grep testing | grep -v grep ; sleep 2; echo "----------------------------------------------------------------------"; done
+  PID  PPID USER     STAT  NI COMMAND
+ 6262  2941 root     S<+  -17 testing.sh
+----------------------------------------------------------------------
+  PID  PPID USER     STAT  NI COMMAND
+ 6262  2941 root     S<+  -17 testing.sh
+^C
+[root@server01 work]# renice -n -19 -p 6262
+6262 (process ID) old priority -17, new priority -19
+[root@server01 work]# for x in {1..1000}; do ps -eo pid,ppid,user,stat,nice,comm | head -1 ;  ps -eo pid,ppid,user,stat,nice,comm | grep testing | grep -v grep ; sleep 2; echo "----------------------------------------------------------------------"; done
+  PID  PPID USER     STAT  NI COMMAND
+ 6262  2941 root     S<+  -19 testing.sh
+----------------------------------------------------------------------
+  PID  PPID USER     STAT  NI COMMAND
+ 6262  2941 root     S<+  -19 testing.sh
+^C
+[root@server01 work]#
+
+
+====================================
+
+
+[root@server01 work]# cat testing.sh
+#!/bin/bash
+count=1
+while true
+do
+echo -e "Count=${count} \t\t Current time - $(date)"
+sleep 2
+count=$[${count} + 1 ]
+done
+[root@server01 work]#
+[root@server01 work]# chmod 755 testing.sh
+[root@server01 work]#
+
+
+
