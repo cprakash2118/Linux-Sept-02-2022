@@ -220,10 +220,13 @@ And verify the same from all terminals.
 uptime explaination:-
 
 LAB-07
-###########
-# mkdir //home/labuser/bin
+#####
+STep-01
+# mkdir /home/labuser/bin
 
-# vim /home/stlabuser/bin/control
+
+STep02
+# vim /home/labuser/bin/control
 
 #!/bin/bash
 while true; do
@@ -231,16 +234,18 @@ while true; do
  sleep 1
 done 
 
-chmod +x /home/stlabuser/bin/control
+STeo3)
 
- control technical 
+chmod +x /home/labuser/bin/control
+
+control technical 
 
 
 (on he other terminal)
 tail -f ~/control_outfile
 
 
-Later
+Later (Current terminal execute below concepts).
  control technical 
 
 Ctrl+z 
