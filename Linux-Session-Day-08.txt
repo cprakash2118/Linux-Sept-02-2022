@@ -65,3 +65,72 @@ Login as root user and execute below command.
 echo "kjsafhdkjashd8u29038e7rt6561289yuewjkdsflah" | passwd --stdin root 
 reboot
 and recover the root password.
+
+================
+Networking part:-
+
+IP Address and networking.
+
+Define this "192.168.56.0/24" (Network):-
+
+192.168.56.0   - Can not be use as IP (As it's a network address, used by network device).
+192.168.56.1   - Can be used as IP address, generally used as gateway.
+192.168.56.2   - 1st host IP
+......
+......
+192.168.56.254 - last host IP 
+192.168.56.255 - Broadcard IP 
+
+ what is /24 - This is called CIDR value 
+ This can be represent as this.
+ 
+ 
+ 255.255.255.0 
+ 11111111.11111111.11111111.00000000
+
+  1 - on bit and involved with network - No of network bit
+  0 - off bit and involved with host   - No of host bit  
+  
+  No of host: (2^no_of_host_bit ) -2 
+  
+   = 2^8 - 2
+   = 254
+
+
+===============
+ /etc/sysconfig/network-scripts/ifcfg-enpp03 
+Note: Device can be changed and based on that file name also change (ifcfg-enpalsk).
+
+vim /etc/hosts
+#############################
+############################# (Don't touch initial line).
+
+192.168.56.101            server01.example.com       server01 
+192.168.56.102            server02.example.com       server02
+192.168.56.103            server03.example.com       server03 
+
+# systemctl enable/reload/restart/stop/start   networkManager
+======
+Below setting need to do via console:-
+
+BOOTPROTO=none for static IP addrress
+IPADDR=192.168.56.200
+PREFIX=24
+GATEWAY=
+DNS1=
+
+ifup interface_name 
+ifdown interface name
+# /etc/resolve.con 
+
+hostnamectl set-hostname server01.example.com 
+
+cat /etc/hostname 
+
+
+================= Lab-10 ================
+- Setup Static IP address in one of the system and try to connect to the other using new IP addres
+- ONce verifed then revert the change (bring back to DHCP IP address.
+
+
+
