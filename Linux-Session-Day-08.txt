@@ -134,3 +134,97 @@ cat /etc/hostname
 
 
 
+==============================
+Compression/extraction using tar 
+
+
+/etc
+
+
+
+
+
+[root@server01 TAR]# scp -r etc.tar root@192.168.56.102:/var/tmp/
+The authenticity of host '192.168.56.102 (192.168.56.102)' can't be established.
+ECDSA key fingerprint is SHA256:mIOKBpGuPfOz8pOmkfO2WkgX3432AvwJBhcvuunkW1E.
+ECDSA key fingerprint is MD5:15:2d:88:1f:34:be:db:fe:f5:0c:fd:a4:6d:77:6f:10.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.56.102' (ECDSA) to the list of known hosts.
+root@192.168.56.102's password:
+etc.tar                                                                           100%   37MB  55.0MB/s   00:00
+[root@server01 TAR]# rsync -avz etc.tar.gz root@192.168.56.102:/var/tmp/
+root@192.168.56.102's password:
+sending incremental file list
+etc.tar.gz
+
+sent 11,920,090 bytes  received 35 bytes  3,405,750.00 bytes/sec
+total size is 12,305,576  speedup is 1.03
+[root@server01 TAR]#
+[root@server01 TAR]#
+
+
+============================
+scp -r etc.tar root@192.168.56.102:/var/tmp/
+ping 192.168.56.102
+scp -r etc.tar root@192.168.56.102:/var/tmp/
+rsync -avz etc.tar.gz root@192.168.56.102:/var/tmp/
+
+
+
+
+##########################################################
+[root@server01 TAR]# du -sh /etc/
+42M     /etc/
+[root@server01 TAR]# tree /etc | tail -2
+
+764 directories, 2805 files
+[root@server01 TAR]# ll
+total 0
+[root@server01 TAR]# tar -cf etc.tar /etc/
+tar: Removing leading `/' from member names
+[root@server01 TAR]# ll
+total 38140
+-rw-r--r--. 1 root root 39055360 Sep 10 11:25 etc.tar
+[root@server01 TAR]# du -sh etc.tar
+38M     etc.tar
+[root@server01 TAR]#
+[root@server01 TAR]# tar -zcf etc.tar.gz /etc
+tar: Removing leading `/' from member names
+[root@server01 TAR]# ll
+total 50160
+-rw-r--r--. 1 root root 39055360 Sep 10 11:25 etc.tar
+-rw-r--r--. 1 root root 12305576 Sep 10 11:26 etc.tar.gz
+[root@server01 TAR]# du -sh *
+38M     etc.tar
+12M     etc.tar.gz
+[root@server01 TAR]# tar -jcf etc.tar.bz2 /etc
+tar: Removing leading `/' from member names
+[root@server01 TAR]# du -sh
+60M     .
+[root@server01 TAR]# du -sh *
+38M     etc.tar
+11M     etc.tar.bz2
+12M     etc.tar.gz
+[root@server01 TAR]# ll
+total 60508
+-rw-r--r--. 1 root root 39055360 Sep 10 11:25 etc.tar
+-rw-r--r--. 1 root root 10593087 Sep 10 11:27 etc.tar.bz2
+-rw-r--r--. 1 root root 12305576 Sep 10 11:26 etc.tar.gz
+[root@server01 TAR]# zi
+zic         zip   
+
+
+
+[root@server01 TAR]# find /var -size +50M
+/var/lib/rpm/Packages
+/var/www/html/repo/images/pxeboot/initrd.img
+/var/www/html/repo/isolinux/initrd.img
+
+
+=============================
+findout file size in betweem 40MB-80MB 
+find the 50M+ of file in both system
+
+
+compress "/etc" via gunzip (gz) , bunzip2 and tar.
+copy this to tmp.  
