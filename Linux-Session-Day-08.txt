@@ -227,4 +227,5 @@ find the 50M+ of file in both system
 
 
 compress "/etc" via gunzip (gz) , bunzip2 and tar.
-copy this to tmp.  
+copy all compressed files  to tmp from serve-01 to server02   
+cupy all compressed file via scp and rsync to server-02 to /var/tmp 
