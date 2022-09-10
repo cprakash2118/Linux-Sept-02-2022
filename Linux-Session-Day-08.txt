@@ -44,7 +44,6 @@ Pahse-07:-
 ==================================
 LAB - TS - Linux password recovery:-
 
-
 In "linu16" line press "end key and check for "rhgb quiet" paramters. 
 "rhgb quiet" replace this by "rd.break enforcing=0"
 
@@ -59,4 +58,10 @@ echo abc | passwd --stdin root
 
 touch /.autorelabel 
 
+##################
+LAb-09- Linux password recovery:-
+Login as root user and execute below command.
 
+echo "kjsafhdkjashd8u29038e7rt6561289yuewjkdsflah" | passwd --stdin root 
+reboot
+and recover the root password.
