@@ -230,8 +230,26 @@ compress "/etc" via gunzip (gz) , bunzip2 and tar.
 copy all compressed files  to tmp from serve-01 to server02   
 cupy all compressed file via scp and rsync to server-02 to /var/tmp 
 
-=============================
+=============================##########################
+Phase-06:- 
+19. Networking Services 
+20. Network CLients.
+21. Network COnfiguration.
+22. Network file sharing services (FTP/NFS/Samaba etc).
+
+Pahse-07:- 
+22. Troubleshooting
+23. Linux Bind      - DNS 
+24. Linux apache    - Done 
+25. Linux Squid 
+26. Linux Mail srvers.
+
+- Server name - phxbookpas01 to phxbookpas50, phxbookdas01 - phxbookdas04, phxbookpdb01-08, blrpaymtpas01 - IP 
+
+###########
 Web server/Apache deployment :-
+###########
+
 
 Step1) Install apache packages.
 # yum install httpd
@@ -278,3 +296,107 @@ or
 #curl http://server01.example.com 
 or
 use firefix and check via webBrowser.
+==================================
+########################
+DNS (DOmain Name Service).
+It convert name to IP and IP to name (How ? - From it's zone repords).
+
+######################
+Step 1)
+yum install bind*
+yum install dnsmasq
+
+firewall-cmd --add-service=dns --permanent
+firewall-cmd --add-port=53/tcp --permanent
+firewall-cmd --add-port=53/udp --permanent
+firewall-cmd --list-all
+firewall-cmd --add-service=dns
+firewall-cmd --add-port=54/tcp
+firewall-cmd --add-port=54/udp
+firewall-cmd --reload
+firewall-cmd --list-all
+
+vim /etc/named.conf  (1st file)
+vim /etc/named.rfc1912.zones
+
+##### NOte: Below two file only edited for correct customization.
+
+[root@server01 html]# cat /etc/named.conf | grep -E '192|any'
+        listen-on port 53 { 127.0.0.1; 192.168.56.101;};
+        allow-query     { localhost; any; };
+[root@server01 html]#
+
+
+
+[root@server01 html]# cat /etc/named.rfc1912.zones | head -26 | tail -15
+################################
+
+zone "lti.com" IN {
+        type master;
+        file "forward.zone";
+        allow-update { none; };
+};
+
+zone "56.168.192.in-addr.arpa" IN {
+        type master;
+        file "reverse.zone";
+        allow-update { none; };
+};
+
+################################
+
+Now showing you zone records.
+
+[root@server01 named]# ls -l *.zone
+-rw-r--r--. 1 root named 360 Sep 10 16:34 forward.zone
+-rw-r--r--. 1 root named 366 Sep 10 16:35 reverse.zone
+[root@server01 named]# cat forward.zone
+$TTL 1D
+@       IN SOA  server01.lti.com. root.server01.lti.com. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+                IN      NS      server01.lti.com.
+server01        IN      A       192.168.56.101
+cprakash        IN      A       192.168.56.101
+server02        IN      A       192.168.56.102
+phxbookpas01    IN      A       192.168.56.111
+phxbookpas02    IN      A       192.168.56.112
+phxbookpas03    IN      A       192.168.56.113
+[root@server01 named]#
+[root@server01 named]# cat reverse.zone
+$TTL 1D
+@       IN SOA  server01.lti.com.  root.server01.lti.com. (
+                                        0       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+        IN      NS      server01.lti.com.
+101     IN      PTR     server01.lti.com.
+101     IN      PTR     cprakash.lti.com.
+102     IN      PTR     server01.lti.com.
+111     IN      PTR     phxbookpas01.lti.com.
+112     IN      PTR     phxbookpas02.lti.com.
+113     IN      PTR     phxbookpas03.lti.com.
+
+[root@server01 named]#
+
+systemctl start named
+systemctl enable named
+nslookup phxbookpas01
+nslookup phxbookpas02
+nslookup phxbookpas03
+vim forward.zone
+vim reverse.zone
+nslookup cprakash
+systemctl reload named.service
+nslookup cprakash
+curl http://server01
+curl http://server01.lti.com
+curl http://cprakash.lti.com
+
+
+###########################################################
