@@ -229,3 +229,52 @@ find the 50M+ of file in both system
 compress "/etc" via gunzip (gz) , bunzip2 and tar.
 copy all compressed files  to tmp from serve-01 to server02   
 cupy all compressed file via scp and rsync to server-02 to /var/tmp 
+
+=============================
+Web server/Apache deployment :-
+
+Step1) Install apache packages.
+# yum install httpd
+# yum info httpd  
+# rpm -qa | grep apache 
+# cat /etc/passwd | grep apache
+# cat /etc/group | grep apache 
+
+Step2) STart and enable apache service (httpd).
+# systemctl enable httpd 
+# systemctl start httpd
+
+======
+Step 3) Enable firewalld for apache 
+Check firewalld is running or not ? It should be in running mode.
+
+# systemctl is-enabled firewalld 
+Output - enabled/disabled
+# systemctl enable firewalld
+# systemctl is-active firewalld 
+active/disabled 
+# systemctl start firewalld 
+
+
+# firewalld-cmd --permanent --add-service=http
+# firewalld-cmd --permanent --add-port=80/tcp 
+# firewalld-cmd --reload 
+
+Verify the firewalld port enabled or not?
+
+# firewall-cmd --list-all
+
+======
+Step4) Deploy index.html as of now.
+# cd /var/www/html 
+NOte: Default DocumentRoot - /var/www/html 
+
+# vim index.html 
+This is my 1st web server.
+:wq 
+
+# curl http://192.168.56.101
+or
+#curl http://server01.example.com 
+or
+use firefix and check via webBrowser.
